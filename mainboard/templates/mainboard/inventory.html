@@ -1,6 +1,6 @@
 {% extends 'mainboard/base_template.html' %}
 {% load static %}
-{% block title %}Inventory Management - Spectrum Business Management System v1.0{% endblock %}
+{% block title %}{{ section_header }} - Spectrum Business Management System v1.0{% endblock %}
 {% block inventory-content %}
 <div id="invman-content">
   <h1>{{ section_header }}</h1>
@@ -8,10 +8,44 @@
   <!-- ALL RECEIVING ADVICES -->
 	{% if rcvAdv_view_all %}
 		<h3>Receiving Advices Listed</h3>
-		<h5><a href="{% url 'addRcvAdvice' %}">Create New Receiving Advice</a></h5>
     {% if success %}
       <h5>{{ success }}</h5>
     {% endif %}
+
+    <!-- Filter Container -->
+  	<div id="filter-container">
+  		<div id="filter-controls">
+  			<form id="filter" name="filter" method="get" action="#">
+  				<table id="filter-form-table">
+  					<tr>
+  						<td>Search</td>
+  						<td><input type="text" id="search-string" name="search-string" maxlength="20" size="50" value=""/></td>
+  						<td><input type="submit" id="submit" name="submit" value="Search"/></td>
+  						<td>&nbsp;</td>
+  						<td>Filter by</td>
+  						<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Document Date</td>
+  						<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Advice Create Date</td>
+  						<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Advice Edit Date</td>
+  					</tr>
+
+  					<tr>
+  						<td class="filter-help" colspan="4">String max length: 20 characters.</td>
+  						<td>Order</td>
+  						<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Ascending</td>
+  						<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Descending</td>
+  						<td><input type="submit" id="submit" name="submit" value="Filter"/></td>
+  					</tr>
+  				</table>
+  			</form>
+  		</div>
+  	</div>
+
+  	<!-- List View Controls -->
+  	<div id="vlc-container">
+  		<ul id="view-list-control">
+  			<a href="{% url 'addRcvAdvice' %}"><li>Create New Receiving Advice</li></a>
+  		</ul>
+  	</div>
 
 		<!-- TABLE FOR RECEIVING ADVICES -->
 		<table id="all-adv-view" class="listings">

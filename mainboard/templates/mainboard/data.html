@@ -1,6 +1,6 @@
 {% extends 'mainboard/base_template.html' %}
 {% load static %}
-{% block title %}Data Management - Spectrum Business Management System v1.0{% endblock %}
+{% block title %}{{ section_header }} - Spectrum Business Management System v1.0{% endblock %}
 {% block dataentry-content %}
 <div id="invman-content">
 	<h1>{{ section_header }}</h1>
@@ -9,10 +9,44 @@
 	<!-- ALL STORES -->
   {% if store_view_all %}
   	<h3>Stores Listed</h3>
-		<h5><a href="{% url 'addStore' %}">Add New Store</a></h5>
 		{% if success %}
 			<h5>{{ success }}</h5>
 		{% endif %}
+
+		<!-- Filter Container -->
+		<div id="filter-container">
+			<div id="filter-controls">
+				<form id="filter" name="filter" method="get" action="#">
+					<table id="filter-form-table">
+						<tr>
+							<td>Search</td>
+							<td><input type="text" id="search-string" name="search-string" maxlength="20" size="50" value=""/></td>
+							<td><input type="submit" id="submit" name="submit" value="Search"/></td>
+							<td>&nbsp;</td>
+							<td>Filter by</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Store Code</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Store Region</td>
+						</tr>
+
+						<tr>
+							<td class="filter-help" colspan="4">String max length: 20 characters.</td>
+							<td>Order</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Ascending</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Descending</td>
+							<td><input type="submit" id="submit" name="submit" value="Filter"/></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+
+		<!-- List View Controls -->
+		<div id="vlc-container">
+			<ul id="view-list-control">
+				<a href="{% url 'addStore' %}"><li>Add New Store</li></a>
+			</ul>
+		</div>
+
 		<table id="all-store-view" class="listings">
 			<tr>
 				<td class="td-header">Store Code</td>
@@ -204,7 +238,41 @@
 	<!-- ALL ITEMS -->
   {% elif item_view_all %}
   	<h3>Items Listed</h3>
-		<h5><a href="{% url 'addItem' %}">Add New Item</a></h5>
+		<!-- Filter Container -->
+		<div id="filter-container">
+			<div id="filter-controls">
+				<form id="filter" name="filter" method="get" action="#">
+					<table id="filter-form-table">
+						<tr>
+							<td>Search</td>
+							<td><input type="text" id="search-string" name="search-string" maxlength="20" size="50" value=""/></td>
+							<td><input type="submit" id="submit" name="submit" value="Search"/></td>
+							<td>&nbsp;</td>
+							<td>Filter by</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Item Code</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Unit Price</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Retail Price</td>
+						</tr>
+
+						<tr>
+							<td class="filter-help" colspan="4">String max length: 20 characters.</td>
+							<td>Order</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Ascending</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Descending</td>
+							<td><input type="submit" id="submit" name="submit" value="Filter"/></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+
+		<!-- List View Controls -->
+		<div id="vlc-container">
+			<ul id="view-list-control">
+				<a href="{% url 'addItem' %}"><li>Add New Item</li></a>
+			</ul>
+		</div>
+
 		<table id="all-item-view" class="listings">
 			<tr>
 				<td class="td-header">Item Code</td>
@@ -284,7 +352,7 @@
 				<div id="adv-controls">
           <table id="adv-controls-table">
             <tr>
-							<td><a href="#">View Inventory Report</a></td>
+							<td width="80px"><a href="#">View Inventory Report</a></td>
               <td><a href="./edit">Edit Item</a></td>
               <td class="cancel"><a href="./cancel" onclick="return cancelPrompt()">Delete Item</a></td>
             </tr>
@@ -325,14 +393,50 @@
 	<!-- ALL SALES ADVICE -->
 	{% elif salesadv_view_all %}
 		<h3>Sales Advices Listed</h3>
-		<h5><a href="{% url 'addAdvice' %}">Create New Sales Advice</a></h5>
 		{% if success %}
 			<h5>{{ success }}</h5>
 		{% endif %}
+		<!-- Filter Container -->
+		<div id="filter-container">
+			<div id="filter-controls">
+				<form id="filter" name="filter" method="get" action="#">
+					<table id="filter-form-table">
+						<tr>
+							<td>Search</td>
+							<td><input type="text" id="search-string" name="search-string" maxlength="20" size="50" value=""/></td>
+							<td><input type="submit" id="submit" name="submit" value="Search"/></td>
+							<td>&nbsp;</td>
+							<td>Filter by</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Document Date</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Advice Create Date</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Advice Edit Date</td>
+						</tr>
+
+						<tr>
+							<td class="filter-help" colspan="4">String max length: 20 characters.</td>
+							<td>Order</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Ascending</td>
+							<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Descending</td>
+							<td><input type="submit" id="submit" name="submit" value="Filter"/></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+
+		<!-- List View Controls -->
+		<div id="vlc-container">
+			<ul id="view-list-control">
+				<a href="{% url 'addAdvice' %}"><li>Create New Sales Advice</li></a>
+			</ul>
+		</div>
+
+		<!-- Table for listings -->
 		<table id="all-adv-view" class="listings">
 			<tr>
 				<td class="td-header">Invoice Number</td>
 				<td class="td-header">Invoice Date</td>
+				<td class="td-header">AP Batch Number</td>
 				<td class="td-header">Store Code</td>
 				<td class="td-header">Created</td>
 				<td class="td-header">Edited</td>
@@ -342,6 +446,7 @@
 				<tr>
 					<td class="data"><a href="salesadvice/{{ sacode.invoiceNumber }}">{{ sacode.invoiceNumber }}</a></td>
 					<td class="data">{{ sacode.invoiceDate }}</td>
+					<td class="data">&nbsp;</td>
 					<td class="data">{{ sacode.store }}</td>
 					<td class="data">{{ sacode.adviceCreator }}, {{ sacode.adviceCreateDate }}</td>
 					<td class="data">{{ sacode.adviceEditor }}, {{ sacode.adviceEditDate }}</td>

@@ -52,7 +52,7 @@ def dashboard(request):
 
 @login_required(login_url='/accounts/login/')
 def data(request):
-	section_header = 'Sales Data'
+	section_header = 'Data Management'
 	context = {
 		'section_header': section_header
 	}

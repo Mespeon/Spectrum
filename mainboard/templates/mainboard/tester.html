@@ -261,14 +261,14 @@
 	}
 
 	/* ERROR LIST */
-	ul.errorlist {
+	ul .errorlist {
 		list-style-type: none;
 		font-size: 14px;
 		padding: 0px;
 
 	}
 
-	li {
+	.errorlist li {
 		color: #f44336;
 		padding: 5px;
 	}
@@ -278,12 +278,61 @@
 		width: 100%;
 		height: auto;
 		border-bottom: 1px solid #999;
+		font-size: 14px;
 	}
 
 	#filter-container {
-		padding: 10px;
+		padding: 20px;
+		padding-left: 0px;
+		padding-top: 0px;
 	}
+
+	#filter-form-table {
+		border-collapse: collapse;
+		text-align: center;
+	}
+
+	#filter-form-table td {
+		padding: 5px;
+	}
+
+	#filter-form-table td.filter-help {
+		font-size: 12px;
+		font-style: italic;
+		padding-bottom: 0px;
+	}
+
 	/* VIEW LIST CONTROLS */
+	#vlc-container {
+			display: block;
+			clear: both;
+			margin-bottom: 55px;
+			margin-top: 10px;
+			font-size: 14px;
+			font-weight: bold;
+	}
+
+	#view-list-control {
+		padding: 0px;
+		margin: 0px;
+	}
+
+	#view-list-control li {
+		float: left;
+		text-align: center;
+		padding: 10px;
+		list-style-type: none;
+		background-color: #4caf50;
+	}
+
+	#view-list-control li:hover {
+		background-color: #00c583;
+	}
+
+	#view-list-control a {
+		color: #efefef;
+		text-decoration: none;
+	}
 </style>
 <!--
 <link href="./static/mainboard/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -311,17 +360,42 @@
 	<!-- FILTER TABLE -->
 	<h1>Sales Advices</h1>
 	<h3>Sales Advices Listed</h3>
+	<!-- Filter Container -->
 	<div id="filter-container">
 		<div id="filter-controls">
-			<form>
-				<label>Search</label>
-				<input type="text"/><br/>
-				<label>Sort By</label>
+			<form id="filter" name="filter" method="get" action="#">
+				<table id="filter-form-table">
+					<tr>
+						<td>Search</td>
+						<td><input type="text" id="search-string" name="search-string" maxlength="20" size="50" value=""/></td>
+						<td><input type="submit" id="submit" name="submit" value="Search"/></td>
+						<td>&nbsp;</td>
+						<td>Filter by</td>
+						<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Document Date</td>
+						<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Advice Create Date</td>
+						<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Advice Edit Date</td>
+						<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Advice Status</td>
+					</tr>
+
+					<tr>
+						<td class="filter-help" colspan="4">String max length: 20 characters.</td>
+						<td>Order</td>
+						<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Ascending</td>
+						<td><input type="radio" id="rb-invoiceDate" name="rb-invoiceDate" value="invoiceDate"/> Descending</td>
+						<td><input type="submit" id="submit" name="submit" value="Filter"/></td>
+					</tr>
+				</table>
 			</form>
 		</div>
 	</div>
 
-	<h5><a href="#">Create New Sales Advice</a></h5>
+	<!-- List View Controls -->
+	<div id="vlc-container">
+		<ul id="view-list-control">
+			<a href="#"><li>Create New Sales Advice</li></a>
+		</ul>
+	</div>
+
 	<table id="all-adv-view" class="listings">
 		<tr>
 			<td class="td-header">Invoice Number</td>
