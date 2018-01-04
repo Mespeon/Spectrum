@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Login - Spectrum Business Management System</title>
+<link rel="stylesheet" href="{% static '/master.css' %}" />
+</head>
+
+<body>
+	<div id="wrapper">
+    	<div id="login-wrapper">
+        	<div id="login-banner"><h1>SBMS v1.0</h1></div>
+            <form id="login" name="login" method="post" action="{% url 'login' %}">{% csrf_token %}
+							{% if next %}
+							    {% if user.is_authenticated %}
+							    <p class="help">Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+							    {% else %}
+							    <p class="help">Please login to access this page.</p>
+							    {% endif %}
+							{% endif %}
+            	<table id="login-form">
+                	<tr>
+                    	<td class="label">Username</td>
+                        <td class="form-object">{{ form.username }}</td>
+                    </tr>
+
+                    <tr>
+                    	<td class="label">Password</td>
+                      <td class="form-object">{{ form.password }}</td>
+                    </tr>
+
+										<tr>
+											{% if form.errors %}<td class="help" colspan=2>Incorrect username or password. Please try again.</td>{% endif %}
+										</tr>
+
+                    <tr>
+                    	<td class="label">&nbsp;</td>
+                      <td class="form-object"><input type="submit" id="login-btn" name="login-btn" value="Log In"/></td>
+											<td class="form-object"><input type="hidden" name="next" value="{{ next }}"/></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

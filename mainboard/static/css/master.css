@@ -1,0 +1,101 @@
+@charset "utf-8";
+/*
+Spectrum Business Management System
+Master Stylesheet - 1.0
+(c) Mark Nolledo, 2017
+*/
+
+body {
+	color: #555;
+	background: #EFEFEF;	
+}
+
+#wrapper {
+	width: 90%;
+	height: auto;
+	margin: auto;
+	margin-top: 85px;
+}
+
+#topbar {
+	position: absolute;
+	background-color: #003;
+	width: 100%;
+	height: auto;
+	top: 0px;
+	margin-left: -8px;
+	color: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#footer {
+	
+}
+
+#bannertext {
+	padding: 5px;
+	font-size: 12px;	
+}
+
+#navbar {
+	display: inline;
+}
+
+#navbar li {
+	float: left;
+	text-align: center;
+	padding: 20px;
+	list-style-type: none;
+}
+
+#navbar a li {
+	color: #fff;
+	font-size: 15px;
+	text-decoration: none;
+}
+
+#navbar li:hover {
+	background-color: #309;	
+}
+
+/* FOR LOGIN PAGE */
+#login-wrapper {
+	width: 30%;
+	height: auto;
+	margin: auto;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#login-banner {
+	background-color: #003;
+	color: #fff;
+}
+
+#login-wrapper h1 {
+	font-weight: 100;
+	font-size: 24px;
+	padding: 10px;
+}
+
+#login-form {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+}
+
+#username, #userpass {
+	width: 150px;	
+}
+
+#login-btn {
+	width: 120px;
+	height: 30px;
+	background-color: #003;
+	color: #fff;
+	border: none;
+}
+
+#login-btn:hover {
+	background-color: #309;
+	cursor: pointer;	
+}

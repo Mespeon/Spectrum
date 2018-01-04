@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'master.css' %}" />
+<script src="{% static 'codex.js' %}"></script>
+</head>
+
+<body>
+	<div id="topbar">
+    	<div id="sys-name">Spectrum Business Management System v.1.0A</div>
+        <div id="user-tools">
+        	<span class="tools-items username">Logged in as: {{ user.username }}&nbsp;({{ user.first_name }}&nbsp;{{ user.last_name }})</span>
+            <span class="tools-items"><a href="{% url 'logout' %}">Log Out</a></span>
+        </div>
+        <div id="navbar-box">
+    			<ul id="navbar">
+        		<a href="{% url 'dashboard' %}"><li>Dashboard</li></a>
+            <a href="{% url 'data' %}"><li>Data Management</li></a>
+						<a href="{% url 'inventory' %}"><li>Inventory Management</li></a>
+        	</ul>
+        </div>
+
+    </div>
+
+		<div id="wrapper">
+		{% if user.is_authenticated %}
+    	{% block dashboard-content %}{% endblock %}
+			{% block dataentry-content %}{% endblock %}
+			{% block inventory-content %}{% endblock %}
+		{% endif %}
+		<div id="footer">
+    	&nbsp;
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,467 @@
+@charset "utf-8";
+/*
+Spectrum Business Management System
+Master Stylesheet - 1.0
+(c) Mark Nolledo, 2017
+*/
+
+body {
+	color: #555;
+	background: #EFEFEF;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h4 {
+	font-style: italic;
+	font-size: 14px;
+	color: #ff0000;
+}
+
+#wrapper {
+	width: 90%;
+	height: auto;
+	margin: auto;
+	margin-top: 10%;
+}
+
+#topbar {
+	position: absolute;
+	background-color: #003;
+	width: 100%;
+	height: auto;
+	top: 0px;
+	margin-left: -8px;
+	color: #fff;
+}
+
+#footer {
+	margin-top: 20px;
+	padding: 10px;
+	display: block;
+	position: absolute;
+}
+
+#sys-name {
+	padding: 5px;
+	font-size: 12px;
+	display: inline;
+	float: left;
+}
+
+#user-tools {
+	padding: 5px;
+	font-size: 12px;
+	display: inline;
+	float: right;
+	clear: right;
+}
+
+#user-tools a {
+	color: #fff;
+}
+
+#user-tools a:hover {
+	font-weight: bold;
+}
+
+.username {
+	font-weight: bold;
+}
+
+.tools-items {
+	margin-left: 5px;
+}
+
+#navbar-box {
+	display: block;
+	clear: both;
+}
+
+#navbar {
+	padding: 0px;
+	margin: 0px;
+}
+
+#navbar li {
+	float: left;
+	text-align: center;
+	padding: 20px;
+	list-style-type: none;
+}
+
+#navbar a li {
+	color: #fff;
+	font-size: 15px;
+	text-decoration: none;
+}
+
+#navbar li:hover {
+	background-color: #309;
+}
+
+/* FOR LOGIN PAGE */
+#login-wrapper {
+	width: 30%;
+	height: auto;
+	margin: auto;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#login-banner {
+	background-color: #003;
+	color: #fff;
+}
+
+#login-wrapper h1 {
+	font-weight: 100;
+	font-size: 24px;
+	padding: 10px;
+}
+
+#login-form {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+}
+
+#username, #userpass {
+	width: 150px;
+}
+
+#login-btn {
+	width: 120px;
+	height: 30px;
+	background-color: #003;
+	color: #fff;
+	border: none;
+}
+
+#login-btn:hover {
+	background-color: #309;
+	cursor: pointer;
+}
+
+/* DASHBOARD FORMAT */
+#glance-primary-container {
+	border-bottom: 1px solid #999;
+	padding: 20px;
+	width: 100%;
+	display: inline-block;
+	clear: right;
+}
+
+.glance-container {
+	padding: 20px;
+	width: 20%;
+	display: inline-block;
+	float: left;
+	margin-bottom: 10px;
+}
+
+.glance-header {
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.glance-container p {
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.glance-counter {
+	font-weight: bold;
+	font-size: 36px;
+	color: #333;
+}
+
+.glance-text {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.glance-detail {
+	color: #333;
+}
+
+.glance-container a {
+	text-decoration: none;
+	color: #309;
+}
+
+.glance-container a:hover {
+	text-decoration: underline;
+}
+
+/* INVENTORY MANAGEMENT CONTROLS */
+.control-container {
+	width: 500px;
+	display: inline-block;
+	margin-bottom: 20px;
+}
+
+.control-container .header {
+	font-size: 16px;
+	font-weight: bold;
+	color: #555;
+}
+
+.invman-controls {
+	border-collapse: separate;
+	border-spacing: 10px;
+	width: 500px;
+	text-align: center;
+	font-size: 14px;
+}
+
+.invman-controls td {
+	background-color: #003;
+	border: 1px solid #999;
+	padding: 30px;
+}
+
+.invman-controls td:hover {
+	background-color: #309;
+	cursor: pointer;
+}
+
+.invman-controls td a {
+	color: #efefef;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.invman-controls td a:hover {
+	text-decoration: underline;
+}
+
+/* HEADER TABLE FORMAT */
+#header-table-container {
+	border-bottom: 1px solid #999;
+	margin-bottom: 10px;
+}
+
+#header-table {
+	width: 80%;
+	height: auto;
+	border-collapse: collapse;
+	font-size: 14px;
+}
+
+#header-table .data {
+	border-bottom: 0px;
+}
+
+#header-table .detail {
+	font-weight: bold;
+}
+
+#header-table td {
+	padding: 10px;
+}
+
+.action-btn {
+	width: 100px;
+	height: 30px;
+	border: 0px;
+	background-color: #003;
+	font-weight: bold;
+	font-size: 12px;
+	color: #fff;
+}
+
+.action-btn:hover {
+	background-color: #309;
+	cursor: pointer;
+}
+
+/* DATA TABLES FORMAT */
+.listings {
+	width: 100%;
+	height: auto;
+	border-collapse: collapse;
+	font-size: 14px;
+}
+
+.listings a {
+	font-weight: bold;
+	color: #009;
+}
+
+.listings a:hover {
+	color: #00C;
+}
+
+.listings td {
+	padding: 10px;
+}
+
+.listings tr:hover {
+		background-color: #ddd;
+}
+
+.td-header {
+	font-weight: bold;
+	background-color: #003;
+	border: 1px solid #efefef;
+	color: #fff;
+}
+
+
+.data {
+	border-bottom: 1px solid #999;
+}
+
+.status {
+	font-weight: bold;
+}
+
+/* INPUT FORM LAYOUT */
+#form-container {
+	font-size: 14px;
+	width: 100%;
+	border-bottom: 1px solid #999;
+}
+
+.form-table {
+	border-collapse: collapse;
+}
+
+.form-field {
+	padding: 10px;
+}
+
+.link {
+	text-align: center;
+}
+
+.link a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #309;
+}
+
+.link a:hover {
+	color: #30C;
+	text-decoration: underline;
+}
+
+.help {
+	font-size: 12px;
+	color: #f44336;
+}
+
+/* ADVICE CONTROLS */
+#adv-control-container {
+
+}
+
+#adv-controls {
+	width: 20%;
+	display: inline;
+	float: right;
+	color: #eee;
+	font-size: 12px;
+}
+
+#adv-controls-table {
+	border-collapse: separate;
+	border-spacing:  5px;
+	text-align: center;
+	font-weight: bold;
+}
+
+#adv-controls-table td {
+	padding: 10px;
+	background-color: #003;
+}
+
+#adv-controls-table td:hover {
+	background-color: #309;
+	cursor: pointer;
+}
+
+#adv-controls-table a {
+	color: #eee;
+	text-decoration: none;
+}
+
+#adv-controls-table a:hover {
+	text-decoration: none;
+}
+
+#adv-controls-table td.cancel {
+	background-color: #e53935;
+}
+
+#adv-controls-table td.cancel:hover {
+	background-color: #f44336;
+}
+
+#adv-controls-table td.approve {
+	background-color: #4caf50;
+}
+
+#adv-controls-table td.approve:hover {
+	background-color: #00c583;
+}
+
+#adv-controls p.approved {
+	color: #555;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#edit-advice-controls {
+	margin-bottom: 5px;
+	width: 100%;
+	border-bottom: 1px solid #999;
+	text-align: right;
+	font-size: 14px;
+}
+
+#edit-advice-controls a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #309;
+}
+
+#edit-advice-controls a:hover {
+	color: #30C;
+	text-decoration: underline;
+}
+
+/* ITEM SPECIFIC */
+.back-link {
+	color: #309;
+	text-decoration: none;
+}
+
+.back-link:hover {
+	text-decoration: underline;
+}
+
+/* ERROR LIST */
+ul.errorlist {
+	list-style-type: none;
+	font-size: 14px;
+	padding: 0px;
+
+}
+
+li {
+	color: #f44336;
+	padding: 5px;
+}
+
+/* FIELD-SPECIFIC */
+#id_adviceCreator {
+	color: #333;
+	background-color: #999;
+	border: 1px solid #888;
+}
+
+#id_adviceCreateDate {
+	color: #333;
+	background-color: #999;
+	border: 1px solid #888;
+}

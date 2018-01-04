@@ -1,0 +1,535 @@
+{% extends 'mainboard/base_template.html' %}
+{% load static %}
+{% block title %}Data Management - Spectrum Business Management System v1.0{% endblock %}
+{% block dataentry-content %}
+<div id="invman-content">
+	<h1>{{ section_header }}</h1>
+
+  <!-- BLOCK FOR "VIEW ALL" AND SPECIFIC VIEWS -->
+	<!-- ALL STORES -->
+  {% if store_view_all %}
+  	<h3>Stores Listed</h3>
+		<h5><a href="{% url 'addStore' %}">Add New Store</a></h5>
+		{% if success %}
+			<h5>{{ success }}</h5>
+		{% endif %}
+		<table id="all-store-view" class="listings">
+			<tr>
+				<td class="td-header">Store Code</td>
+				<td class="td-header">Store Name</td>
+				<td class="td-header">Store Region</td>
+				<td class="td-header">Store Address</td>
+			</tr>
+			{% for scode in store_view_all %}
+			<tr>
+				<td class="data"><a href="stores/{{ scode.store_code}}">{{ scode.store_code }}</a></td>
+				<td class="data">{{ scode.store_name }}</td>
+				<td class="data">{{ scode.store_region }}</td>
+				<td class="data">{{ scode.store_address }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+
+	<!-- ADD STORE -->
+	{% elif addStore %}
+		<div id="form-container">
+			<h5>Adding New Store</h5>
+			<form id="addStoreForm" class="form" method="post" action="{% url 'addStore' %}">
+				{% csrf_token %}
+				<table class="form-table">
+					<tr>
+						<td class="form-field"><label for="store_code">Store Code</label></td>
+						<td class="form-field">{{ form.store_code }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field"><label for="store_name">Store Name</label></td>
+						<td class="form-field">{{ form.store_name }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field"><label for="store_region">Store Region</label></td>
+						<td class="form-field">{{ form.store_region }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field"><label for="store_address">Store Address</label></td>
+						<td class="form-field">{{ form.store_address }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field link"><input type="submit" id="submit" name="submit" class="action-btn" value="Add Store" />&nbsp;&nbsp;<a href="{% url 'storeAll' %}">Cancel</a></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+	<!-- EDIT STORE -->
+	{% elif editStore %}
+		<h4>Editing store code is no longer allowed at this point.<br/>If you would like to edit the store code, <a href="./delete" onclick="return deleteStorePrompt()">delete</a> this store then create a new store.</h4>
+		<div id="form-container">
+			<form id="editStoreForm" class="form" method="post" action="./edit">
+				{% csrf_token %}
+				<table class="form-table">
+					<tr>
+						<td class="form-field"><label for="store_name">Store Name</label></td>
+						<td class="form-field">{{ form.store_name }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field"><label for="store_region">Store Region</label></td>
+						<td class="form-field">{{ form.store_region }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field"><label for="store_address">Store Address</label></td>
+						<td class="form-field">{{ form.store_address }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field link"><input type="submit" id="submit" name="submit" class="action-btn" value="Save Changes" />&nbsp;&nbsp;<a href="./{{ store.store_code }}">Cancel</a></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+	<!-- VIEW STORE -->
+	{% elif store %}
+		<h5><a href="{% url 'storeAll' %}">Back to Stores List</a></h5>
+		<h5>Viewing Details for Store {{ store }}</h5>
+		<div id="header-table-container">
+			<table id="header-table">
+				<tr>
+					<td class="data">Store Code:</td>
+					<td class="data detail">{{ storeDetails.store_code }}</td>
+					<td class="data">Store Name:</td>
+					<td class="data detail">{{ storeDetails.store_name}}</td>
+				</tr>
+
+				<tr>
+					<td class="data">Store Region:</td>
+					<td class="data detail">{{ storeDetails.store_region }}</td>
+					<td class="data">Store Address:</td>
+					<td class="data detail">{{ storeDetails.store_address }}</td>
+				</tr>
+    	</table>
+			<!-- ADVICE CONTROLS -->
+			<div id="adv-control-container">
+				<div id="adv-controls">
+          <table id="adv-controls-table">
+            <tr>
+              <td width="90"><a href="./edit">Edit Store</a></td>
+              <td width="90" class="cancel"><a href="./cancel" onclick="return cancelPrompt()">Delete Store</a></td>
+            </tr>
+          </table>
+				</div>
+			</div>
+    </div>
+
+		<!-- SPACER -->
+		<div>&nbsp;</div>
+
+		<!-- INVENTORY QUICK COUNT GLANCE CONTAINERS -->
+		<h3>Inventory Quick Count for Store {{ store }}</h3>
+		{% for item in allItems %}
+		<div class="glance-container" name="item">
+    	<span class="glance-header">{{ item.item_name }}</span>
+			<p class="glance-counter">0</p>
+    </div>
+		{% endfor %}
+
+		<!-- SPACERS -->
+		<div style="clear: both;">&nbsp;</div>
+		<div style="clear: both;">&nbsp;</div>
+		<div style="clear: both;">&nbsp;</div>
+
+		<!-- TABLE FOR ALL RELATED RECEIVING ADVICES OF THIS PARTICULAR STORE -->
+		<h3>Receiving Advices for Store {{ store }}</h3>
+		<table id="all-adv-view" class="listings">
+			<tr>
+				<td class="td-header">Receipt Number</td>
+				<td class="td-header">Receipt Date</td>
+				<td class="td-header">Store Code</td>
+				<td class="td-header">Created</td>
+				<td class="td-header">Edited</td>
+				<td class="td-header">Status</td>
+			</tr>
+			{% if allRcvAdvices %}
+				{% for sacode in allRcvAdvices %}
+					<tr>
+						<td class="data"><a href="salesadvice/{{ sacode.invoiceNumber }}">{{ sacode.receiptNumber }}</a></td>
+						<td class="data">{{ sacode.receiptDate }}</td>
+						<td class="data">{{ sacode.store }}</td>
+						<td class="data">{{ sacode.adviceCreator }}, {{ sacode.adviceCreateDate }}</td>
+						<td class="data">{{ sacode.adviceEditor }}, {{ sacode.adviceEditDate }}</td>
+						<td class="data status">{{ sacode.adviceStatus }}</td>
+					</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan=6>No receiving advices listed.</td>
+				</tr>
+			{% endif %}
+		</table>
+
+		<!-- TABLE FOR ALL RELATED SALES ADVICES OF THIS PARTICULAR STORE -->
+		<h3>Sales Advices for Store {{ store }}</h3>
+		<table id="all-adv-view" class="listings">
+			<tr>
+				<td class="td-header">Invoice Number</td>
+				<td class="td-header">Invoice Date</td>
+				<td class="td-header">Store Code</td>
+				<td class="td-header">Created</td>
+				<td class="td-header">Edited</td>
+				<td class="td-header">Status</td>
+			</tr>
+			{% if allSalesAdvices %}
+				{% for sacode in allSalesAdvices %}
+					<tr>
+						<td class="data"><a href="salesadvice/{{ sacode.receiptNumber }}">{{ sacode.invoiceNumber }}</a></td>
+						<td class="data">{{ sacode.invoiceDate }}</td>
+						<td class="data">{{ sacode.store }}</td>
+						<td class="data">{{ sacode.adviceCreator }}, {{ sacode.adviceCreateDate }}</td>
+						<td class="data">{{ sacode.adviceEditor }}, {{ sacode.adviceEditDate }}</td>
+						<td class="data status">{{ sacode.adviceStatus }}</td>
+					</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan=6>No sales advices listed.</td>
+				</tr>
+			{% endif %}
+		</table>
+
+	<!-- ALL ITEMS -->
+  {% elif item_view_all %}
+  	<h3>Items Listed</h3>
+		<h5><a href="{% url 'addItem' %}">Add New Item</a></h5>
+		<table id="all-item-view" class="listings">
+			<tr>
+				<td class="td-header">Item Code</td>
+				<td class="td-header">Item Name</td>
+				<td class="td-header">Unit Price</td>
+				<td class="td-header">Retail Price</td>
+			</tr>
+			{% for icode in item_view_all %}
+			<tr>
+				<td class="data"><a href="items/{{ icode.item_SKU }}">{{ icode.item_SKU }}</a></td>
+				<td class="data">{{ icode.item_name }}</td>
+				<td class="data">{{ icode.item_unit_price }}</td>
+				<td class="data">{{ icode.item_retail_price }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+
+	<!-- ADD ITEM -->
+	{% elif addItem %}
+		<div id="form-container">
+			<h5>Adding New Item</h5>
+			<form id="addItemForm" class="form" method="post" action="/mainboard/">
+				{% csrf_token %}
+				<table class="form-table">
+					<tr>
+						<td class="form-field"><label for="store_code">Item SKU</label></td>
+						<td class="form-field">{{ form.item_SKU }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field"><label for="store_name">Item Name</label></td>
+						<td class="form-field">{{ form.item_name }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field"><label for="store_region">Unit Price</label></td>
+						<td class="form-field">{{ form.item_unit_price }}&nbsp;<span class="help">{{ form.item_unit_price.help_text }}</span></td>
+					</tr>
+
+					<tr>
+						<td class="form-field"><label for="store_address">Retail Price</label></td>
+						<td class="form-field">{{ form.item_retail_price }}&nbsp;<span class="help">{{ form.item_unit_price.help_text }}</span></td>
+					</tr>
+
+					<tr>
+						<td class="form-field link"><input type="submit" id="submit" name="submit" class="action-btn" value="Add Item" />&nbsp;&nbsp;<a href="{% url 'itemAll' %}">Cancel</a></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+	<!-- VIEW ITEM DETAILS -->
+	{% elif viewItem %}
+		<h5>Viewing Item</h5>
+		<h5><a href="{% url 'itemAll' %}" class="back-link">Back to Items List</a></h5>
+		{% if success %}
+			<h5>{{ success }}</h5>
+		{% endif %}
+    <div id="header-table-container">
+			<table id="header-table">
+				<tr>
+					<td class="data">Item SKU:</td>
+					<td class="data detail">{{ item.item_SKU }}</td>
+					<td class="data">Item Name:</td>
+					<td class="data detail">{{ item.item_name}}</td>
+				</tr>
+
+				<tr>
+					<td class="data">Item Unit Price:</td>
+					<td class="data detail">{{ item.item_unit_price }}</td>
+					<td class="data">Item Retail:</td>
+					<td class="data detail">{{ item.item_retail_price }}</td>
+				</tr>
+    	</table>
+			<!-- ADVICE CONTROLS -->
+			<div id="adv-control-container">
+				<div id="adv-controls">
+          <table id="adv-controls-table">
+            <tr>
+							<td><a href="#">View Inventory Report</a></td>
+              <td><a href="./edit">Edit Item</a></td>
+              <td class="cancel"><a href="./cancel" onclick="return cancelPrompt()">Delete Item</a></td>
+            </tr>
+          </table>
+				</div>
+			</div>
+    </div>
+
+	<!-- EDIT ITEM -->
+	{% elif editItem %}
+		<h4>Editing Item SKU is no longer allowed at this point.</h4>
+		<div id="form-container">
+			<form id="editItemForm" class="form" method="post" action="./edit">
+				{% csrf_token %}
+				<table class="form-table">
+					<tr>
+						<td class="form-field"><label for="item_name">Item Name</label></td>
+						<td class="form-field">{{ form.item_name }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field"><label for="item_unit_price">Item Unit Price</label></td>
+						<td class="form-field">{{ form.item_unit_price }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field"><label for="store_address">Item Retail Price</label></td>
+						<td class="form-field">{{ form.item_retail_price }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field link"><input type="submit" id="submit" name="submit" class="action-btn" value="Save Changes" />&nbsp;&nbsp;<a href="./{{ item.item_SKU }}">Cancel</a></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+	<!-- ALL SALES ADVICE -->
+	{% elif salesadv_view_all %}
+		<h3>Sales Advices Listed</h3>
+		<h5><a href="{% url 'addAdvice' %}">Create New Sales Advice</a></h5>
+		{% if success %}
+			<h5>{{ success }}</h5>
+		{% endif %}
+		<table id="all-adv-view" class="listings">
+			<tr>
+				<td class="td-header">Invoice Number</td>
+				<td class="td-header">Invoice Date</td>
+				<td class="td-header">Store Code</td>
+				<td class="td-header">Created</td>
+				<td class="td-header">Edited</td>
+				<td class="td-header">Status</td>
+			</tr>
+			{% for sacode in salesadv_view_all %}
+				<tr>
+					<td class="data"><a href="salesadvice/{{ sacode.invoiceNumber }}">{{ sacode.invoiceNumber }}</a></td>
+					<td class="data">{{ sacode.invoiceDate }}</td>
+					<td class="data">{{ sacode.store }}</td>
+					<td class="data">{{ sacode.adviceCreator }}, {{ sacode.adviceCreateDate }}</td>
+					<td class="data">{{ sacode.adviceEditor }}, {{ sacode.adviceEditDate }}</td>
+					<td class="data status">{{ sacode.adviceStatus }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+	<!-- ADD ADVICE -->
+	{% elif addAdv %}
+		<div id="form-container">
+			<h5>Generating new Sales Advice</h5>
+			{% if error %}
+				<h5>Errors Found</h5>
+				{{ error }}
+			{% endif %}
+			<form id="addAdvForm" class="form" method="post" action="{% url 'addAdvice' %}">
+				{% csrf_token %}
+				<table class="form-table">
+					<tr>
+						<td class="form-field"><label for="store_code">Store Code</label></td>
+						<td class="form-field">{{ form.store }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field"><label for="invoice_number">Invoice Number</label></td>
+						<td class="form-field">{{ form.invoiceNumber }}</td>
+						<td class="form-field"><label for="invoice_date">Invoice Date</label></td>
+						<td class="form-field">{{ form.invoiceDate }} <span class="help">YYYY-MM-DD</span></td>
+						<td class="form-field"><label for="payment_due">Payment Due</label></td>
+						<td class="form-field">{{ form.paymentDueDate }} <span class="help">YYYY-MM-DD</span></td>
+					</tr>
+
+					<tr>
+						<td class="form-field">To be generated by:</td>
+						<td class="form-field">{{ form.adviceCreator }}</td>
+						<td class="form-field">To be created on:</td>
+						<td class="form-field">{{ form.adviceCreateDate }}</td>
+					</tr>
+
+					<tr>
+						<td colspan="5">&nbsp;</td>
+						<td class="form-field link"><input type="submit" id="submit" name="submit" class="action-btn" value="Create Advice" />&nbsp;&nbsp;<a href="{% url 'salesAdvAll' %}">Cancel</a></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+		<!-- EDIT ADVICE -->
+		{% elif editAdv %}
+			<h4><p>Initial invoice details are no longer editable at this point.<br/>If you want to edit or change the initial invoice details of this advice, cancel this advice then create a new one instead.</p></h4>
+			<form id="editAdviceForm" name="editAdviceForm" class="form" method="post" action="./edit">
+			{% csrf_token %}
+			<div id="edit-advice-controls">
+				<div id="controls">
+					<input type="submit" id="submit" name="submit" class="action-btn" value="Save Changes"/>&nbsp;<a href="./">Cancel</a>
+				</div>
+			</div>
+			<table id="salesadv-items-view" class="listings">
+				<tr>
+					<td class="td-header">Item SKU</td>
+					<td class="td-header">Item Name</td>
+					<td class="td-header">Quantity</td>
+				</tr>
+				{% for items in items %}
+					<tr id="row-{{ items.item_id }}">
+						<td class="data">{{ items.item_SKU }}</td>
+						<td class="data">{{ items.item_name }}</td>
+						<td class="data"><input type="text" name="qty-for-item-{{ items.item_id }}" value="{{ items.itemQty }}" required /></td>
+					</tr>
+				{% endfor %}
+			</table>
+			</form>
+
+		<!-- SALES ADVICE DETAILS -->
+		{% elif salesAdv_detail %}
+		<h5><a href="{% url 'salesAdvAll' %}" class="back-link">Back to Sales Advice List</a></h5>
+		<h5>Viewing details for Sales Advice {{ salesAdv_detail }}</h5>
+		{% if success %}
+			<h5>{{ success }}</h5>
+		{% endif %}
+    <div id="header-table-container">
+			<table id="header-table">
+				<tr>
+					<td class="data">Advice Created:</td>
+          <td class="data detail">{{ adviceCreated }}</td>
+					<td class="data">Invoice Number:</td>
+          <td class="data detail">{{ invoiceNumber }}</td>
+				</tr>
+				<tr>
+          <td class="data">Advice Edited:</td>
+          <td class="data detail">{{ adviceEdited }}</td>
+					<td class="data">Invoice Date:</td>
+          <td class="data detail">{{ invoiceDate }}</td>
+				</tr>
+
+				<tr>
+					<td class="data">Advice Status:</td>
+					<td class="data detail">{{ adviceStatus }}</td>
+					<td class="data">Payment Due:</td>
+          <td class="data detail">{{ paymentDueDate }}</td>
+				</tr>
+
+				<tr>
+        	<td class="data">Total Items in Advice:</td>
+          <td class="data detail">{{ itemQty }}</td>
+					<td class="data">Store Code:</td>
+          <td class="data detail">{{ storeCode }}</td>
+				</tr>
+
+				<tr>
+          <td class="data">Total Amount Payable:</td>
+          <td class="data detail">{{ amtPayable }}</td>
+          <td class="data">Store Name:</td>
+          <td class="data detail" colspan="3">{{ storeName }}</td>
+				</tr>
+
+				<tr>
+					<td class="data">Total Commission:</td>
+					<td class="data detail">{{ amtCommission }}</td>
+					<td class="data">A/P Batch Number:</td>
+					<td class="data detail">AP BATCH NUM</td>
+				</tr>
+    	</table>
+			<!-- ADVICE CONTROLS -->
+			<div id="adv-control-container">
+				<div id="adv-controls">
+					{% if approved %}
+            <p class="approved">{{ approved }}</p>
+          {% else %}
+            <table id="adv-controls-table">
+              <tr>
+                <td class="approve"><a href="./approve" onclick="return approvePrompt()">Approve Advice</td>
+                <td><a href="./edit">Edit Advice</a></td>
+                <td class="cancel"><a href="./cancel" onclick="return cancelPrompt()">Delete Advice</a></td>
+              </tr>
+            </table>
+          {% endif %}
+				</div>
+			</div>
+    </div>
+
+		<table id="salesadv-items-view" class="listings">
+			<tr>
+				<td class="td-header">Item SKU</td>
+				<td class="td-header">Item Name</td>
+				<td class="td-header">Quantity</td>
+				<td class="td-header">Commission</td>
+				<td class="td-header">Amount Payable</td>
+			</tr>
+			{% for item in item_list %}
+				<tr>
+					<td class="data">{{ item.item_SKU }}</td>
+					<td class="data">{{ item.item_name }}</td>
+					<td class="data">{{ item.itemQty }}</td>
+					<td class="data">0</td>
+					<td class="data">{{ item.itemCost }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+	<!-- DEFAULT VIEW FOR DATA -->
+	<!-- MENU TILE BOARD -->
+	{% else %}
+		<!-- IF NO 'VIEW' OPTION IS SELECTED, SHOW THIS SECTION. BY DEFAULT, THIS SHOULD BE SHOWN FOR EVERY NON-SPECIFIC INSTANCE OF MAINBOARD/DATA.. -->
+		<!-- TILE BOARD -->
+		<div class="control-container">
+			<span class="header">View Lists</span>
+			<table class="invman-controls">
+				<tr>
+					<td><a href="{% url 'salesAdvAll' %}">View All Sales Advice</a></td>
+					<td><a href="{% url 'storeAll' %}">View All Stores</a></td>
+					<td><a href="{% url 'itemAll' %}">View All Items</a></td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="control-container">
+			<span class="header">Create New Entry</span>
+			<table class="invman-controls">
+				<tr>
+					<td><a href="{% url 'addAdvice' %}">Create Sales Advice</a></td>
+					<td><a href="{% url 'addStore' %}">Add New Store</a></td>
+					<td><a href="{% url 'addItem' %}">Add New Item</a></td>
+				</tr>
+			</table>
+		</div>
+  {% endif %}
+
+</div>
+{% endblock %}

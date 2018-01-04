@@ -1,0 +1,45 @@
+{% extends 'mainboard/base_template.html' %}
+{% block title %}Dashboard - Spectrum Business Management System v1.0{% endblock %}
+{% block dashboard-content %}
+	<h1>Dashboard</h1>
+    <!-- LEFT COLUMN - FLOATED -->
+    <div id="glance-primary-container">
+    	<p class="glance-text">Welcome, {{ user.first_name }} {{ user.last_name }}!</p>
+    	<p class="glance-detail">Business Date</p>
+        <span class="glance-counter">{{ businessdate }}</span>
+    </div>
+
+    <!-- RIGHT COLUMN - FLOATED & CLEARED -->
+		<div class="glance-container" name="total-items">
+    	<span class="glance-header">Total Sales Advices Created</span>
+			<p class="glance-counter">{{ salesadv_count }}</p>
+			<span class="glance-text">Latest Sales Advice:</span>
+      <p class="glance-detail"><a href="/mainboard/data/salesadvice/{{ salesadv_latest.invoiceNumber }}">{{ salesadv_latest.invoiceNumber }}</a></p>
+      <a href="{% url 'salesAdvAll'%}" class="glance-text">View All Sales Advices</a>
+    </div>
+
+		<div class="glance-container" name="total-logs">
+	  	<span class="glance-header">Total Receiving Advices Created</span>
+			<p class="glance-counter">{{ rcvadv_count }}</p>
+			<span class="glance-text">Latest Receiving Advice:</span>
+	    <p class="glance-detail"><a href="/mainboard/inventory/receivingadvice/{{ rcvadv_latest.receiptNumber }}">{{ rcvadv_latest.receiptNumber }}</a></p>
+	    <a href="{% url 'rcvAdvAll'%}" class="glance-text">View All Receiving Advices</a>
+		</div>
+
+    <div class="glance-container" name="total-stores">
+    	<span class="glance-header">Total Stores Recorded</span>
+			<p class="glance-counter">{{ store_count }}</p>
+			<span class="glance-text">Most Recently Added Store:</span>
+      <p class="glance-detail">{{ store_latest.store_code }} - {{ store_latest.store_name }}</p>
+      <a href="{% url 'storeAll'%}" class="glance-text">View All Stores</a>
+    </div>
+
+    <div class="glance-container" name="total-items">
+    	<span class="glance-header">Total Items Recorded</span>
+			<p class="glance-counter">{{ item_count }}</p>
+			<span class="glance-text">Most Recently Added Item:</span>
+      <p class="glance-detail">{{ item_latest.item_name }}</p>
+      <a href="{% url 'itemAll'%}" class="glance-text">View All Items</a>
+    </div>
+
+{% endblock %}

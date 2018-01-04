@@ -1,0 +1,208 @@
+{% extends 'mainboard/base_template.html' %}
+{% load static %}
+{% block title %}Inventory Management - Spectrum Business Management System v1.0{% endblock %}
+{% block inventory-content %}
+<div id="invman-content">
+  <h1>{{ section_header }}</h1>
+
+  <!-- ALL RECEIVING ADVICES -->
+	{% if rcvAdv_view_all %}
+		<h3>Receiving Advices Listed</h3>
+		<h5><a href="{% url 'addRcvAdvice' %}">Create New Receiving Advice</a></h5>
+    {% if success %}
+      <h5>{{ success }}</h5>
+    {% endif %}
+
+		<!-- TABLE FOR RECEIVING ADVICES -->
+		<table id="all-adv-view" class="listings">
+			<tr>
+				<td class="td-header">Receipt Number</td>
+				<td class="td-header">Receipt Date</td>
+				<td class="td-header">Store Code</td>
+				<td class="td-header">Created</td>
+				<td class="td-header">Edited</td>
+				<td class="td-header">Status</td>
+			</tr>
+			{% for rcvcode in rcvAdv_view_all %}
+				<tr>
+					<td class="data"><a href="receivingadvice/{{ rcvcode.receiptNumber }}">{{ rcvcode.receiptNumber }}</a></td>
+					<td class="data">{{ rcvcode.receiptDate }}</td>
+					<td class="data">{{ rcvcode.store }}</td>
+					<td class="data">{{ rcvcode.adviceCreator }}, {{ rcvcode.adviceCreateDate }}</td>
+					<td class="data">{{ rcvcode.adviceEditor }}, {{ rcvcode.adviceEditDate }}</td>
+					<td class="data status">{{ rcvcode.adviceStatus }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+  <!-- VIEW SPECIFIC ADVICE -->
+  {% elif rcvAdv %}
+    <h5><a href="{% url 'rcvAdvAll' %}" class="back-link">Back to Receiving Advice List</a></h5>
+    <h5>Viewing details for Receving Advice {{ receiptNumber }}</h5>
+    {% if success %}
+			<h5>{{ success }}</h5>
+		{% endif %}
+    <!-- HEADER TABLE -->
+    <div id="header-table-container">
+			<table id="header-table">
+				<tr>
+					<td class="data">Advice Created:</td>
+          <td class="data detail">{{ adviceCreated }}</td>
+					<td class="data">Receipt Number:</td>
+          <td class="data detail">{{ receiptNumber }}</td>
+				</tr>
+				<tr>
+          <td class="data">Advice Edited:</td>
+          <td class="data detail">{{ adviceEdited }}</td>
+					<td class="data">Receipt Date:</td>
+          <td class="data detail">{{ receiptDate }}</td>
+				</tr>
+
+				<tr>
+					<td class="data">Advice Status:</td>
+					<td class="data detail">{{ adviceStatus }}</td>
+					<td class="data">Store Code:</td>
+          <td class="data detail">{{ storeCode }}</td>
+				</tr>
+
+				<tr>
+        	<td class="data">Total Items in Advice:</td>
+          <td class="data detail">{{ itemCount }}</td>
+					<td class="data">Store Name:</td>
+          <td class="data detail">{{ storeName }}</td>
+				</tr>
+
+				<tr>
+          <td class="data">Total Amount Delivered:</td>
+          <td class="data detail">{{ itemTotal }}</td>
+          <td class="data" colspan="2">&nbsp;</td>
+          <td class="data detail" colspan="2">&nbsp;</td>
+				</tr>
+    	</table>
+
+      <!-- ADVICE CONTROLS -->
+      <div id="adv-control-container">
+        <div id="adv-controls">
+          {% if approved %}
+            <p class="approved">{{ approved }}</p>
+          {% else %}
+            <table id="adv-controls-table">
+              <tr>
+                <td class="approve"><a href="./approve" onclick="return approvePrompt()">Approve Advice</td>
+                <td><a href="./edit">Edit Advice</a></td>
+                <td class="cancel"><a href="./cancel" onclick="return cancelPrompt()">Delete Advice</a></td>
+              </tr>
+            </table>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <!-- END HEADER TABLE -->
+
+    <!-- ADVICE ITEMS -->
+    <table id="salesadv-items-view" class="listings">
+			<tr>
+				<td class="td-header">Item SKU</td>
+				<td class="td-header">Item Name</td>
+				<td class="td-header">Quantity</td>
+			</tr>
+			{% for item in item_list %}
+				<tr>
+					<td class="data">{{ item.item_SKU }}</td>
+					<td class="data">{{ item.item_name }}</td>
+					<td class="data">{{ item.itemQty }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+    <!-- END ADVICE ITEMS -->
+
+  <!-- ADD RECEIVING ADVICE -->
+  {% elif addRcvAdv %}
+    <div id="form-container">
+      <h5>Generating new Receiving Advice</h5>
+      {% if error %}
+        <h5>Errors Found</h5>
+				{{ error }}
+			{% endif %}
+      <form id="addAdvForm" class="form" method="post" action="{% url 'addRcvAdvice' %}">
+        {% csrf_token %}
+        <table class="form-table">
+          <tr>
+            <td class="form-field"><label for="store_code">Store Code</label></td>
+            <td class="form-field">{{ form.store }}</td>
+          </tr>
+
+          <tr>
+            <td class="form-field"><label for="invoice_number">Receipt Number</label></td>
+            <td class="form-field">{{ form.receiptNumber }}</td>
+            <td class="form-field"><label for="invoice_date">Receipt Date</label></td>
+            <td class="form-field">{{ form.receiptDate }} <span class="help">YYYY-MM-DD</span></td>
+          </tr>
+
+          <tr>
+            <td class="form-field">To be generated by:</td>
+            <td class="form-field">{{ form.adviceCreator }}</td>
+            <td class="form-field">To be created on:</td>
+            <td class="form-field">{{ form.adviceCreateDate }}</td>
+          </tr>
+
+          <tr>
+            <td colspan="5">&nbsp;</td>
+            <td class="form-field link"><input type="submit" id="submit" name="submit" class="action-btn" value="Create Advice" />&nbsp;&nbsp;<a href="{% url 'rcvAdvAll' %}">Cancel</a></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+  <!-- EDIT RECEIVING ADVICE -->
+  {% elif editRcvAdv %}
+    <h4><p>Initial invoice details are no longer editable at this point.<br/>If you want to edit or change the initial invoice details of this advice, cancel this advice then create a new one instead.</p></h4>
+    <!-- EDIT ADVICE FORM -->
+    <form id="editAdviceForm" name="editAdviceForm" class="form" method="post" action="./edit">
+    {% csrf_token %}
+    <div id="edit-advice-controls">
+      <div id="controls">
+        <input type="submit" id="submit" name="submit" class="action-btn" value="Save Changes"/>&nbsp;<a href="./">Cancel</a>
+      </div>
+    </div>
+    <table id="salesadv-items-view" class="listings">
+      <tr>
+        <td class="td-header">Item SKU</td>
+        <td class="td-header">Item Name</td>
+        <td class="td-header">Quantity</td>
+      </tr>
+      {% for items in items %}
+        <tr id="row-{{ items.item_id }}">
+          <td class="data">{{ items.item_SKU }}</td>
+          <td class="data">{{ items.item_name }}</td>
+          <td class="data"><input type="text" name="qty-for-item-{{ items.item_id }}" value="{{ items.itemQty }}" required /></td>
+        </tr>
+      {% endfor %}
+    </table>
+    </form>
+
+  {% else %}
+    <!-- DEFAULT VIEW FOR INVENTORY -->
+    <!-- DISPLAY ALL MENU TILES -->
+    <div class="control-container">
+			<span class="header">View Lists</span>
+			<table class="invman-controls">
+				<tr>
+					<td><a href="{% url 'rcvAdvAll' %}">View Receiving Advices</a></td>
+          <td><a href="#">View Orders</a></td>
+				</tr>
+			</table>
+		</div>
+
+    <div class="control-container">
+			<span class="header">Create New Entry</span>
+			<table class="invman-controls">
+				<tr>
+					<td><a href="{% url 'addRcvAdvice' %}">Create Receiving Advice</a></td>
+					<td><a href="#">Create New Order</a></td>
+				</tr>
+			</table>
+		</div>
+  {% endif %}
+</div>
+{% endblock %}

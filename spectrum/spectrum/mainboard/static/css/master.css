@@ -1,0 +1,179 @@
+@charset "utf-8";
+/*
+Spectrum Business Management System
+Master Stylesheet - 1.0
+(c) Mark Nolledo, 2017
+*/
+
+body {
+	color: #555;
+	background: #EFEFEF;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h4 {
+	font-style: italic;
+	color: #ff0000;
+}
+
+#wrapper {
+	width: 90%;
+	height: auto;
+	margin: auto;
+	margin-top: 10%;
+}
+
+#topbar {
+	position: absolute;
+	background-color: #003;
+	width: 100%;
+	height: auto;
+	top: 0px;
+	margin-left: -8px;
+	color: #fff;
+}
+
+#footer {
+	padding: 10px;
+}
+
+#sys-name {
+	padding: 5px;
+	font-size: 12px;
+	display: inline;
+	float: left;
+}
+
+#user-tools {
+	padding: 5px;
+	font-size: 12px;
+	display: inline;
+	float: right;
+	clear: right;
+}
+
+#user-tools a {
+	color: #fff;
+}
+
+#user-tools a:hover {
+	font-weight: bold;
+}
+
+.username {
+	font-weight: bold;
+}
+
+.tools-items {
+	margin-left: 5px;
+}
+
+#navbar-box {
+	display: block;
+	clear: both;
+}
+
+#navbar {
+	padding: 0px;
+	margin: 0px;
+}
+
+#navbar li {
+	float: left;
+	text-align: center;
+	padding: 20px;
+	list-style-type: none;
+}
+
+#navbar a li {
+	color: #fff;
+	font-size: 15px;
+	text-decoration: none;
+}
+
+#navbar li:hover {
+	background-color: #309;
+}
+
+/* FOR LOGIN PAGE */
+#login-wrapper {
+	width: 30%;
+	height: auto;
+	margin: auto;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#login-banner {
+	background-color: #003;
+	color: #fff;
+}
+
+#login-wrapper h1 {
+	font-weight: 100;
+	font-size: 24px;
+	padding: 10px;
+}
+
+#login-form {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+}
+
+#username, #userpass {
+	width: 150px;
+}
+
+#login-btn {
+	width: 120px;
+	height: 30px;
+	background-color: #003;
+	color: #fff;
+	border: none;
+}
+
+#login-btn:hover {
+	background-color: #309;
+	cursor: pointer;
+}
+
+/* DATA TABLES FORMAT */
+.listings {
+	width: 100%;
+	height: auto;
+	border-collapse: collapse;
+	font-size: 14px;
+}
+
+.listings a {
+	font-weight: bold;
+	color: #009;
+}
+
+.listings a:hover {
+	color: #00C;
+}
+
+.listings td {
+	padding: 10px;
+}
+
+.listings tr:hover {
+		background-color: #ddd;
+}
+
+.td-header {
+	font-weight: bold;
+	background-color: #003;
+	border: 1px solid #efefef;
+	color: #fff;
+}
+
+
+.data {
+	border-bottom: 1px solid #999;
+}
+
+.status {
+	font-weight: bold;
+}
