@@ -10,16 +10,17 @@
 
 <body>
 	<div id="topbar">
-    	<div id="sys-name">Spectrum Business Management System v.1.0A</div>
+    	<div id="sys-name">Spectrum Business Management System v.1.4</div>
         <div id="user-tools">
         	<span class="tools-items username">Logged in as: {{ user.username }}&nbsp;({{ user.first_name }}&nbsp;{{ user.last_name }})</span>
-            <span class="tools-items"><a href="{% url 'logout' %}">Log Out</a></span>
+          <span class="tools-items"><a href="{% url 'logout' %}">Log Out</a></span>
         </div>
         <div id="navbar-box">
     			<ul id="navbar">
         		<a href="{% url 'dashboard' %}"><li>Dashboard</li></a>
             <a href="{% url 'data' %}"><li>Data Management</li></a>
 						<a href="{% url 'inventory' %}"><li>Inventory Management</li></a>
+						{% if user.is_superuser %}<a href="/admin" target="_blank"><li>Admin Control Panel</li></a>{% endif %}
         	</ul>
         </div>
 

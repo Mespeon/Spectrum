@@ -41,11 +41,13 @@
 		</div>
 
 		<!-- List View Controls -->
+		{% if user.is_superuser or user.is_staff %}
 		<div id="vlc-container">
 			<ul id="view-list-control">
 				<a href="{% url 'addStore' %}"><li>Add New Store</li></a>
 			</ul>
 		</div>
+		{% endif %}
 
 		<table id="all-store-view" class="listings">
 			<tr>
@@ -100,7 +102,7 @@
 
 	<!-- EDIT STORE -->
 	{% elif editStore %}
-		<h4>Editing store code is no longer allowed at this point.<br/>If you would like to edit the store code, <a href="./delete" onclick="return deleteStorePrompt()">delete</a> this store then create a new store.</h4>
+		<h4>Editing store code is no longer allowed at this point.<br/>If you would like to edit the store code,{% if user.is_superuser or user.is_staff %} <a href="./delete" onclick="return deleteStorePrompt()">delete</a>{% else %} delete{% endif %} this store then create a new store.</h4>
 		<div id="form-container">
 			<form id="editStoreForm" class="form" method="post" action="./edit">
 				{% csrf_token %}
@@ -152,8 +154,12 @@
 				<div id="adv-controls">
           <table id="adv-controls-table">
             <tr>
-              <td width="90"><a href="./edit">Edit Store</a></td>
-              <td width="90" class="cancel"><a href="./cancel" onclick="return cancelPrompt()">Delete Store</a></td>
+							{% if user.is_superuser or user.is_staff %}
+	              <td width="90"><a href="./edit">Edit Store</a></td>
+	              <td width="90" class="cancel"><a href="./cancel" onclick="return cancelPrompt()">Delete Store</a></td>
+							{% else %}
+								<td width="200px"><a href="./edit">Edit Store</a></td>
+							{% endif %}
             </tr>
           </table>
 				</div>
@@ -267,11 +273,13 @@
 		</div>
 
 		<!-- List View Controls -->
+		{% if user.is_superuser or user.is_staff %}
 		<div id="vlc-container">
 			<ul id="view-list-control">
 				<a href="{% url 'addItem' %}"><li>Add New Item</li></a>
 			</ul>
 		</div>
+		{% endif %}
 
 		<table id="all-item-view" class="listings">
 			<tr>
@@ -352,9 +360,12 @@
 				<div id="adv-controls">
           <table id="adv-controls-table">
             <tr>
-							<td width="80px"><a href="#">View Inventory Report</a></td>
-              <td><a href="./edit">Edit Item</a></td>
-              <td class="cancel"><a href="./cancel" onclick="return cancelPrompt()">Delete Item</a></td>
+							{% if user.is_superuser or user.is_staff %}
+	              <td width="90px"><a href="./edit">Edit Item</a></td>
+	              <td width="90px" class="cancel"><a href="./cancel" onclick="return cancelPrompt()">Delete Item</a></td>
+							{% else %}
+								<td width="200px"><a href="./edit">Edit Item</a></td>
+							{% endif %}
             </tr>
           </table>
 				</div>
@@ -579,9 +590,13 @@
           {% else %}
             <table id="adv-controls-table">
               <tr>
-                <td class="approve"><a href="./approve" onclick="return approvePrompt()">Approve Advice</td>
-                <td><a href="./edit">Edit Advice</a></td>
-                <td class="cancel"><a href="./cancel" onclick="return cancelPrompt()">Delete Advice</a></td>
+								{% if user.is_superuser or user.is_staff %}
+									<td class="approve"><a href="./approve" onclick="return approvePrompt()">Approve Advice</td>
+	                <td><a href="./edit">Edit Advice</a></td>
+	                <td class="cancel"><a href="./cancel" onclick="return cancelPrompt()">Delete Advice</a></td>
+								{% else %}
+									<td width="200px"><a href="./edit">Edit Advice</a></td>
+								{% endif %}
               </tr>
             </table>
           {% endif %}
@@ -629,8 +644,10 @@
 			<table class="invman-controls">
 				<tr>
 					<td><a href="{% url 'addAdvice' %}">Create Sales Advice</a></td>
-					<td><a href="{% url 'addStore' %}">Add New Store</a></td>
-					<td><a href="{% url 'addItem' %}">Add New Item</a></td>
+					{% if user.is_superuser or user.is_staff %}
+						<td><a href="{% url 'addStore' %}">Add New Store</a></td>
+						<td><a href="{% url 'addItem' %}">Add New Item</a></td>
+					{% endif %}
 				</tr>
 			</table>
 		</div>

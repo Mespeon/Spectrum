@@ -121,11 +121,13 @@
             <p class="approved">{{ approved }}</p>
           {% else %}
             <table id="adv-controls-table">
-              <tr>
+              {% if user.is_superuser or user.is_staff %}
                 <td class="approve"><a href="./approve" onclick="return approvePrompt()">Approve Advice</td>
                 <td><a href="./edit">Edit Advice</a></td>
                 <td class="cancel"><a href="./cancel" onclick="return cancelPrompt()">Delete Advice</a></td>
-              </tr>
+              {% else %}
+                <td width="200px"><a href="./edit">Edit Advice</a></td>
+              {% endif %}
             </table>
           {% endif %}
         </div>
@@ -223,7 +225,7 @@
 			<table class="invman-controls">
 				<tr>
 					<td><a href="{% url 'rcvAdvAll' %}">View Receiving Advices</a></td>
-          <td><a href="#">View Orders</a></td>
+          {% if user.is_superuser or user.is_staff %}<td><a href="#">View Orders</a></td>{% endif %}
 				</tr>
 			</table>
 		</div>
@@ -233,7 +235,7 @@
 			<table class="invman-controls">
 				<tr>
 					<td><a href="{% url 'addRcvAdvice' %}">Create Receiving Advice</a></td>
-					<td><a href="#">Create New Order</a></td>
+					{% if user.is_superuser or user.is_staff %}<td><a href="#">Create New Order</a></td>{% endif %}
 				</tr>
 			</table>
 		</div>

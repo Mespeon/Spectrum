@@ -1,12 +1,18 @@
 {% extends 'mainboard/base_template.html' %}
 {% block title %}Dashboard - Spectrum Business Management System v1.0{% endblock %}
 {% block dashboard-content %}
-	<h1>Dashboard</h1>
     <!-- LEFT COLUMN - FLOATED -->
     <div id="glance-primary-container">
-    	<p class="glance-text">Welcome, {{ user.first_name }} {{ user.last_name }}!</p>
-    	<p class="glance-detail">Business Date</p>
-        <span class="glance-counter">{{ businessdate }}</span>
+			<h3 style="margin-bottom: 0px;">Welcome, {{ user.first_name }} {{ user.last_name }}!</h3>
+				{% if user.is_superuser or user.is_staff %}
+				{% else %}
+					<span class="glance-text help">Your account has limited permissions. Some features and pages may be unavailable.</span>
+				{% endif %}
+      <p class="glance-text">
+				<span class="glance-text">Today</span><br/>
+				<span class="glance-counter">{{ businessdate }}</span><br/>
+				<span class="glance-text">Your last login was on {{ user.last_login }}.</span>
+			</p>
     </div>
 
     <!-- RIGHT COLUMN - FLOATED & CLEARED -->
