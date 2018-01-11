@@ -6,9 +6,12 @@
 <title>{% block title %}{% endblock %}</title>
 <link rel="stylesheet" href="{% static 'master.css' %}" />
 <script src="{% static 'codex.js' %}"></script>
+<script src="{% static 'jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'anima.js' %}"></script>
 </head>
 
 <body>
+	<!-- DROP DOWN MENU MOD -->
 	<div id="topbar">
     	<div id="sys-name">Spectrum Business Management System v.1.4</div>
         <div id="user-tools">
@@ -18,13 +21,42 @@
         <div id="navbar-box">
     			<ul id="navbar">
         		<a href="{% url 'dashboard' %}"><li>Dashboard</li></a>
-            <a href="{% url 'data' %}"><li>Data Management</li></a>
-						<a href="{% url 'inventory' %}"><li>Inventory Management</li></a>
+            <a href="{% url 'data' %}"><li class="data-management">Data Management</li></a>
+						<a href="{% url 'inventory' %}"><li class="inv-management">Inventory Management</li></a>
 						{% if user.is_superuser %}<a href="/admin" target="_blank"><li>Admin Control Panel</li></a>{% endif %}
         	</ul>
         </div>
-
     </div>
+
+		<!-- DROPDOWN MENUS -->
+		<div id="dropdown">
+			<div id="dtm-menu" class="menu-container">
+				<ul class="dropdown-menu">
+					<li class="menu-heading">View Lists</li>
+					<a href="{% url 'salesAdvAll' %}"><li class="nav-items">Sales Advices</li></a>
+					<a href="{% url 'storeAll' %}"><li class="nav-items">Stores</li></a>
+					<a href="{% url 'itemAll' %}"><li class="nav-items">Items</li></a>
+					<li class="menu-heading">Create New Entry</li>
+					<a href="{% url 'addAdvice' %}"><li class="nav-items">Sales Advice</li></a>
+					{% if user.is_superuser or user.is_staff %}
+						<a href="{% url 'addStore' %}"><li class="nav-items">New Store</li></a>
+						<a href="{% url 'addItem' %}"><li class="nav-items">New Item</li></a>
+					{% endif %}
+				</ul>
+			</div>
+
+			<div id="inv-menu" class="menu-container">
+				<ul class="dropdown-menu">
+					<li class="menu-heading">View Lists</li>
+					<a href="{% url 'rcvAdvAll' %}"><li class="nav-items">Receiving Advices</li></a>
+					{% if user.is_superuser or user.is_staff %}<a href="#"><li class="nav-items">Orders</li></a>{% endif %}
+					<li class="menu-heading">Create New Entry</li>
+					<a href="{% url 'addRcvAdvice' %}"><li class="nav-items">Receiving Advice</li></a>
+					{% if user.is_superuser or user.is_staff %}<a href="#"><li class="nav-items">New Order</li></a>{% endif %}
+				</ul>
+			</div>
+		</div>
+		<!-- END DROPDOWN MENUS -->
 
 		<div id="wrapper">
 		{% if user.is_authenticated %}

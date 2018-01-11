@@ -333,7 +333,65 @@
 		color: #efefef;
 		text-decoration: none;
 	}
+
+	/* DROP DOWN MENU MODIFICATION TO CURRENT NAV MENU*/
+	#dropdown {
+		width: 20%;
+	}
+
+	.menu-container {
+		width: 20%;
+		padding: 10px;
+		background-color: #303F9F; /* REPLACE #002 COLORS WITH THIS, IF ANY. */
+		margin-bottom: 10px;
+		position: absolute;
+		display: none;
+		font-size: 14px;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+
+	#dtm-menu {
+		top: 84px;
+		left: 112px;
+	}
+
+	#inv-menu {
+		top: 84px;
+		left: 271px;
+	}
+
+	.active {
+		background-color: #303F9F;
+	}
+
+	.dropdown-menu {
+		padding: 0px;
+		margin: 0px;
+		list-style-type: none;
+	}
+
+	.dropdown-menu li {
+		margin: 10px;
+		color: #efefef;
+	}
+
+	.menu-heading {
+		border-bottom: 1px solid #aaa;
+		padding-bottom: 5px;
+		font-weight: bold;
+	}
+
+	.dropdown-menu a {
+		text-decoration: none;
+	}
+
+	.nav-items:hover {
+		color: #f48fb1;
+	}
 </style>
+<link rel="stylesheet" href="static/mainboard/css/master.css" />
+<script src="static/mainboard/js/jquery-3.1.1.min.js"></script>
+<script src="static/mainboard/js/anima.js"></script>
 <!--
 <link href="./static/mainboard/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="./static/mainboard/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
@@ -356,11 +414,60 @@
 -->
 </head>
 <body>
+	<!-- DROP DOWN MENU MOD -->
+	<div id="topbar">
+    	<div id="sys-name">Spectrum Business Management System v.1.4</div>
+        <div id="user-tools">
+        	<span class="tools-items username">Logged in as: {{ user.username }}&nbsp;({{ user.first_name }}&nbsp;{{ user.last_name }})</span>
+          <span class="tools-items"><a href="{% url 'logout' %}">Log Out</a></span>
+        </div>
+        <div id="navbar-box">
+    			<ul id="navbar">
+        		<a href="{% url 'dashboard' %}"><li>Dashboard</li></a>
+            <a href="{% url 'data' %}"><li class="data-management">Data Management</li></a>
+						<a href="{% url 'inventory' %}"><li class="inv-management">Inventory Management</li></a>
+						{% if user.is_superuser %}<a href="/admin" target="_blank"><li>Admin Control Panel</li></a>{% endif %}
+        	</ul>
+        </div>
+    </div>
+
+		<!-- DROPDOWN MENUS -->
+		<div id="dropdown">
+			<div id="dtm-menu" class="menu-container">
+				<ul class="dropdown-menu">
+					<li class="menu-heading">View Lists</li>
+					<a href="{% url 'salesAdvAll' %}"><li class="nav-items">Sales Advices</li></a>
+					<a href="{% url 'storeAll' %}"><li class="nav-items">Stores</li></a>
+					<a href="{% url 'itemAll' %}"><li class="nav-items">Items</li></a>
+					<li class="menu-heading">Create New Entry</li>
+					<a href="{% url 'addAdvice' %}"><li class="nav-items">Sales Advice</li></a>
+					{% if user.is_superuser or user.is_staff %}
+						<a href="{% url 'addStore' %}"><li class="nav-items">New Store</li></a>
+						<a href="{% url 'addItem' %}"><li class="nav-items">New Item</li></a>
+					{% endif %}
+				</ul>
+			</div>
+
+			<div id="inv-menu" class="menu-container">
+				<ul class="dropdown-menu">
+					<li class="menu-heading">View Lists</li>
+					<a href="{% url 'rcvAdvAll' %}"><li class="nav-items">Receiving Advices</li></a>
+					{% if user.is_superuser or user.is_staff %}<a href="#"><li class="nav-items">Orders</li></a>{% endif %}
+					<li class="menu-heading">Create New Entry</li>
+					<a href="{% url 'addRcvAdvice' %}"><li class="nav-items">Receiving Advice</li></a>
+					{% if user.is_superuser or user.is_staff %}<a href="#"><li class="nav-items">New Order</li></a>{% endif %}
+				</ul>
+			</div>
+		</div>
+
 <div id="wrapper">
-	<!-- FILTER TABLE -->
+
+	<h2>jQuery Position</h2>
+	<span id="position-jq"></span><br/>
+	<!-- FILTER TABLE
 	<h1>Sales Advices</h1>
 	<h3>Sales Advices Listed</h3>
-	<!-- Filter Container -->
+	<!-- Filter Container
 	<div id="filter-container">
 		<div id="filter-controls">
 			<form id="filter" name="filter" method="get" action="#">
@@ -389,7 +496,7 @@
 		</div>
 	</div>
 
-	<!-- List View Controls -->
+	<!-- List View Controls
 	<div id="vlc-container">
 		<ul id="view-list-control">
 			<a href="#"><li>Create New Sales Advice</li></a>

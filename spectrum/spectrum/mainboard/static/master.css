@@ -7,7 +7,7 @@ Master Stylesheet - 1.0
 
 body {
 	color: #555;
-	background: #EFEFEF;
+	background: #fff;
 	font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -26,12 +26,13 @@ h4 {
 
 #topbar {
 	position: absolute;
-	background-color: #003;
+	background-color: #1A237E; /* REPLACE ALL #003 COLORS WITH THIS */
 	width: 100%;
 	height: auto;
 	top: 0px;
 	margin-left: -8px;
 	color: #fff;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #footer {
@@ -96,7 +97,62 @@ h4 {
 }
 
 #navbar li:hover {
-	background-color: #309;
+	background-color: #303F9F; /* REPLACE #309 COLORS WITH THIS, IF ANY. */
+}
+
+/* DROP DOWN MENU MODIFICATION TO CURRENT NAV MENU*/
+#dropdown {
+	width: 20%;
+}
+
+.menu-container {
+	width: 20%;
+	padding: 10px;
+	background-color: #303F9F; /* REPLACE #002 COLORS WITH THIS, IF ANY. */
+	margin-bottom: 10px;
+	position: absolute;
+	display: none;
+	font-size: 14px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#dtm-menu {
+	top: 84px;
+	left: 112px;
+}
+
+#inv-menu {
+	top: 84px;
+	left: 271px;
+}
+
+.active {
+	background-color: #303F9F;
+}
+
+.dropdown-menu {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+.dropdown-menu li {
+	margin: 10px;
+	color: #efefef;
+}
+
+.menu-heading {
+	border-bottom: 1px solid #aaa;
+	padding-bottom: 5px;
+	font-weight: bold;
+}
+
+.dropdown-menu a {
+	text-decoration: none;
+}
+
+.nav-items:hover {
+	color: #f48fb1;
 }
 
 /* FOR LOGIN PAGE */
