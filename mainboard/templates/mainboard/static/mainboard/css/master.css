@@ -248,6 +248,45 @@ h4 {
 	text-decoration: underline;
 }
 
+/* GLANCE CONTAINER BUTTONS */
+#glance-shortcuts {
+	width: 100%;
+}
+
+#shortcuts {
+	list-style-type: none;
+	padding: 0px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#shortcuts li {
+	padding: 8px;
+	margin-bottom: 5px;
+	color: #efefef;
+	text-align: center;
+}
+
+#shortcuts a {
+	text-decoration: none;
+}
+
+#shortcuts li.add {
+	background-color: #4caf50;
+}
+
+#shortcuts li.add:hover {
+	background-color: #00c583;
+}
+
+#shortcuts .shortcut-link {
+	background-color: #1a2373;
+}
+
+#shortcuts .shortcut-link:hover {
+	background-color: #303f9f;
+}
+
 /* INVENTORY MANAGEMENT CONTROLS */
 .control-container {
 	width: 500px;

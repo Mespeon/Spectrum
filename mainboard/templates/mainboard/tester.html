@@ -388,6 +388,45 @@
 	.nav-items:hover {
 		color: #f48fb1;
 	}
+
+	/* GLANCE CONTAINER BUTTONS */
+	#glance-shortcuts {
+		width: 100%;
+	}
+
+	#shortcuts {
+		list-style-type: none;
+		padding: 0px;
+		font-size: 12px;
+		font-weight: bold;
+	}
+
+	#shortcuts li {
+		padding: 8px;
+		margin-bottom: 5px;
+		color: #efefef;
+		text-align: center;
+	}
+
+	#shortcuts a {
+		text-decoration: none;
+	}
+
+	#shortcuts li.add {
+		background-color: #4caf50;
+	}
+
+	#shortcuts li.add:hover {
+		background-color: #00c583;
+	}
+
+	#shortcuts .shortcut-link {
+		background-color: #1a2373;
+	}
+
+	#shortcuts .shortcut-link:hover {
+		background-color: #303f9f;
+	}
 </style>
 <link rel="stylesheet" href="static/mainboard/css/master.css" />
 <script src="static/mainboard/js/jquery-3.1.1.min.js"></script>
@@ -464,6 +503,57 @@
 
 	<h2>jQuery Position</h2>
 	<span id="position-jq"></span><br/>
+	<!-- DASHBOARD FORMAT -->
+    <!-- LEFT COLUMN - FLOATED -->
+    <div id="glance-primary-container">
+    	<p class="glance-text">Welcome, {{ user }}!</p>
+    	<p class="glance-detail">Business Date</p>
+        <span class="glance-counter">{{ timezone.now }}</span>
+    </div>
+
+    <!-- RIGHT COLUMN - FLOATED & CLEARED -->
+    <div class="glance-container" name="total-stores">
+    	<span class="glance-header">Total Stores Recorded in Database</span>
+			<p class="glance-counter">999</p>
+			<span class="glance-text">Most Recently Added Store:</span>
+    	<p class="glance-detail">Puregold Price Club - Balanga Bataan</p>
+			<!-- GLANCE CONTAINER SHORTCUTS -->
+			<div id="glance-shortcuts">
+				<ul id="shortcuts">
+					<a href="#"><li class="shortcut-link add">Add New Store</li></a>
+					<a href="#"><li class="shortcut-link">View All Stores</li></a>
+				</ul>
+			</div>
+    </div>
+
+    <div class="glance-container" name="total-items">
+    	<span class="glance-header">Total Items Recorded in Database</span>
+			<p class="glance-counter">999</p>
+			<span class="glance-text">Most Recently Added Item:</span>
+      <p class="glance-detail">7th Sacred Relic</p>
+			<!-- GLANCE CONTAINER SHORTCUTS -->
+			<div id="glance-shortcuts">
+				<ul id="shortcuts">
+					<a href="#"><li class="shortcut-link add">Add New Item</li></a>
+					<a href="#"><li class="shortcut-link">View All Items</li></a>
+				</ul>
+			</div>
+    </div>
+
+    <div class="glance-container" name="total-items">
+    	<span class="glance-header">Total Sales Advices Recorded in Database</span>
+			<p class="glance-counter">999</p>
+			<span class="glance-text">Most Recently Sales Advice:</span>
+      <p class="glance-detail">ABC12345678</p>
+			<!-- GLANCE CONTAINER SHORTCUTS -->
+			<div id="glance-shortcuts">
+				<ul id="shortcuts">
+					<a href="#"><li class="shortcut-link add">Create Sales Advice</li></a>
+					<a href="#"><li class="shortcut-link">View All Sales Advices</li></a>
+				</ul>
+			</div>
+    </div>
+
 	<!-- FILTER TABLE
 	<h1>Sales Advices</h1>
 	<h3>Sales Advices Listed</h3>
@@ -693,41 +783,6 @@
         </table>
     </div>
 	-->
-
-	<!-- DASHBOARD FORMAT
-    <h1>Dashboard</h1>
-
-    <!-- LEFT COLUMN - FLOATED
-    <div id="glance-primary-container">
-    	<p class="glance-text">Welcome, {{ user }}!</p>
-    	<p class="glance-detail">Business Date</p>
-        <span class="glance-counter">{{ timezone.now }}</span>
-    </div>
-
-    <!-- RIGHT COLUMN - FLOATED & CLEARED
-    <div class="glance-container" name="total-stores">
-    	<span class="glance-header">Total Stores Recorded in Database</span>
-		<p class="glance-counter">999</p>
-		<span class="glance-text">Most Recently Added Store:</span>
-        <p class="glance-detail">Puregold Price Club - Balanga Bataan</p>
-        <a href="{% url 'storeAll'%}" class="glance-text">View All Stores >></a>
-    </div>
-
-    <div class="glance-container" name="total-items">
-    	<span class="glance-header">Total Items Recorded in Database</span>
-		<p class="glance-counter">999</p>
-		<span class="glance-text">Most Recently Added Item:</span>
-        <p class="glance-detail">7th Sacred Relic</p>
-        <a href="{% url 'storeAll'%}" class="glance-text">View All Items</a>
-    </div>
-
-    <div class="glance-container" name="total-items">
-    	<span class="glance-header">Total Sales Advices Recorded in Database</span>
-		<p class="glance-counter">999</p>
-		<span class="glance-text">Most Recently Sales Advice:</span>
-        <p class="glance-detail">ABC12345678</p>
-        <a href="{% url 'storeAll'%}" class="glance-text">View All Sales Advices</a>
-    </div>
 
 	<!-- DATA LISTINGS AND DATA ENTRY FORMAT
 	<h1>TABLE TESTER</h1>

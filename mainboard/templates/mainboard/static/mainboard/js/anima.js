@@ -56,17 +56,13 @@ $(document).ready(function(){
 
     // Execute if the mouse leaves the top menu
 		$(this).mouseleave(function(e){
-      //className = ''; // resets the variable to an empty value
 
-      // Fades out any active children elements of the dropdown menu div,
-      // and removes the active class from them.
-      //$('#dropdown').children('.menu-container').removeClass('active').delay(1000).fadeOut(500);
 		});
 	});
 
   $('body').click(function (e){
     // Remove active classes from dropdown menus and hide them.
-    $('#dropdown').children('.menu-container').removeClass('active').delay(1000).fadeOut(500);
+    $('#dropdown').children('.menu-container').removeClass('active').fadeOut(500);
   });
 
   e.preventDefault();
