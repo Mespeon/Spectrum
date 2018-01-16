@@ -30,6 +30,7 @@ class Product(models.Model):
 class SalesAdvice(models.Model):
 	invoiceNumber = models.CharField(max_length=20, default='', unique=True)
 	invoiceDate = models.DateField()
+	apBatchNumber = models.CharField(max_length=20, default='')
 	paymentDueDate = models.DateField()
 	store = models.ForeignKey(Store, on_delete=models.CASCADE)
 	adviceCreator = models.CharField(max_length=50, null=True)

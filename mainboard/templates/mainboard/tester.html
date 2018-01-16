@@ -462,9 +462,9 @@
         </div>
         <div id="navbar-box">
     			<ul id="navbar">
-        		<a href="{% url 'dashboard' %}"><li>Dashboard</li></a>
-            <a href="{% url 'data' %}"><li class="data-management">Data Management</li></a>
-						<a href="{% url 'inventory' %}"><li class="inv-management">Inventory Management</li></a>
+        		<a class="top-link" href="{% url 'dashboard' %}"><li>Dashboard</li></a>
+            <a class="top-link" href="{% url 'data' %}"><li id="data-management" class="data-management">Data Management</li></a>
+						<a class="top-link" href="{% url 'inventory' %}"><li id="inv-management" class="inv-management">Inventory Management</li></a>
 						{% if user.is_superuser %}<a href="/admin" target="_blank"><li>Admin Control Panel</li></a>{% endif %}
         	</ul>
         </div>

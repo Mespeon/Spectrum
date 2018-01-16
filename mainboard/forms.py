@@ -47,7 +47,7 @@ class AddAdviceForm(ModelForm):
     adviceCreateDate = forms.CharField(widget=forms.TextInput(attrs={'readonly':'True'}))
     class Meta:
         model = SalesAdvice
-        fields = ['invoiceNumber', 'invoiceDate', 'paymentDueDate', 'store', 'adviceCreator', 'adviceCreateDate']
+        fields = ['invoiceNumber', 'invoiceDate', 'apBatchNumber', 'paymentDueDate', 'store', 'adviceCreator', 'adviceCreateDate']
 
 class AddStoreForm(ModelForm):
     store_name = forms.CharField(widget=forms.TextInput(attrs={'size':50}))

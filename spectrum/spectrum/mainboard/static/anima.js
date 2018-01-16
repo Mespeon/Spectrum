@@ -1,16 +1,38 @@
-/*
 $(document).ready(function(){
-  $(".menu-top li").click(function(){
-    $(".dropdown-menu", this).fadeIn(100);
-  }, function(){
-    $(".dropdown-menu", this).stop().fadeOut(100);
+  $('#data-management').hover(function(e){
+    // Check if the next menu is active.
+    // Remove active classes and hide  them if found.
+    if ($(this).parent().next().children('li').hasClass('active')) {
+      $(this).parent().next().children('li').removeClass('active');
+      $('#inv-menu').slideUp(500);
+    }
+
+    $(this).addClass('active'); // Add active class to top-level menu link
+    //menuTimeout = setTimeout(function(){ thisObject.delay(500).hide(); }, 2000);
+
+    // Show the respective dropdown menu and mark it active
+    $('#dtm-menu').slideDown(500, function(e){
+      $(this).addClass('active');
+    });
   });
 
-  e.preventDefault();
-});
-*/
+  $('#inv-management').hover(function(e){
+    // Check if the previous menu is active.
+    // Remove active classes and hide  them if found.
+    if ($(this).parent().prev().children('li').hasClass('active')) {
+      $(this).parent().prev().children('li').removeClass('active');
+      $('#dtm-menu').slideUp(500);
+    }
 
-$(document).ready(function(){
+    $(this).addClass('active'); // Add active class to top-level menu link
+
+    // Show the respective dropdown menu and mark it active
+    $('#inv-menu').slideDown(500, function(e){
+      $(this).addClass('active');
+    })
+  });
+
+  /*
   $('#navbar li').hover(function(e){
     // Get class name of top level menu item
     var className = $(this).attr('class');
@@ -59,10 +81,12 @@ $(document).ready(function(){
 
 		});
 	});
+  */
 
-  $('body').click(function (e){
+  $('#wrapper').mouseenter(function (e){
     // Remove active classes from dropdown menus and hide them.
-    $('#dropdown').children('.menu-container').removeClass('active').fadeOut(500);
+    $('#dropdown').children('.menu-container').removeClass('active').slideUp(500);
+    $('.top-link').children('li').removeClass('active');
   });
 
   e.preventDefault();

@@ -52,7 +52,7 @@
       <!-- GLANCE CONTAINER SHORTCUTS -->
 			<div id="glance-shortcuts">
 				<ul id="shortcuts">
-					<a href="{% url 'addStore' %}"><li class="shortcut-link add">Add New Store</li></a>
+					{% if user.is_superuser or user.is_staff %}<a href="{% url 'addStore' %}"><li class="shortcut-link add">Add New Store</li></a>{% endif %}
 					<a href="{% url 'storeAll' %}"><li class="shortcut-link">View All Stores</li></a>
 				</ul>
 			</div>
@@ -66,7 +66,7 @@
       <!-- GLANCE CONTAINER SHORTCUTS -->
 			<div id="glance-shortcuts">
 				<ul id="shortcuts">
-					<a href="{% url 'addItem' %}"><li class="shortcut-link add">Add New Item</li></a>
+					{% if user.is_superuser or user.is_staff %}<a href="{% url 'addItem' %}"><li class="shortcut-link add">Add New Item</li></a>{% endif %}
 					<a href="{% url 'itemAll' %}"><li class="shortcut-link">View All Items</li></a>
 				</ul>
 			</div>

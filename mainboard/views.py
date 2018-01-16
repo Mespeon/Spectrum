@@ -281,7 +281,7 @@ def salesadvAll(request):
 	except KeyError:
 		success = 'No new advices added'
 
-	all_advices = SalesAdvice.objects.filter().order_by('-invoiceDate', '-adviceEditDate','-adviceCreateDate')
+	all_advices = SalesAdvice.objects.filter().order_by('-invoiceDate')
 
 	context = {
 		'section_header': section_header,
@@ -374,6 +374,7 @@ def salesAdv(request, invoiceNumber):
 		paymentDueDate = str(sacode.paymentDueDate)
 		storeCode = str(sacode.store_code)
 		storeName = str(sacode.store_name)
+		apBatchNumber = str(sacode.apBatchNumber)
 		adviceCreateDate = str(sacode.adviceCreateDate)
 		adviceCreator = str(sacode.adviceCreator)
 		adviceEditDate = str(sacode.adviceEditDate)
@@ -396,7 +397,7 @@ def salesAdv(request, invoiceNumber):
 	#COUNT ALL ITEMS
 	for count in SalesAdvice.objects.raw('SELECT *, SUM(itemQty) AS itemCount, SUM(itemCost) AS itemCost FROM mainboard_salesadvice LEFT JOIN mainboard_salesadviceitems ON mainboard_salesadvice.id = mainboard_salesadviceitems.invoiceNumber_id LEFT JOIN mainboard_product ON mainboard_salesadviceitems.item_id = mainboard_product.id WHERE mainboard_salesadvice.invoiceNumber="'+request_invoice+'"'):
 		item_count = count.itemCount
-		item_cost = floor(count.itemCost)
+		item_cost = '{:.4f}'.format(count.itemCost)
 
 	context = {
 		'section_header': ' : '.join([invoiceNumber, storeName]),
@@ -405,6 +406,7 @@ def salesAdv(request, invoiceNumber):
 		'invoiceDate': invoiceDate,
 		'paymentDueDate': paymentDueDate,
 		'storeCode': storeCode,
+		'apBatchNumber': apBatchNumber,
 		'storeName': storeName,
 		'adviceCreated': advice_created,
 		'adviceEdited': advice_edited,
@@ -458,7 +460,8 @@ def editAdv(request, invoiceNumber):
 			#Calculate updated itemCost based from itemUnitCost * itemQty
 			unit_cost = item_row.itemUnitCost
 			item_cost = unit_cost * float(item_qty)
-			item_row.itemCost = item_cost	#Assign value to item cost.
+			format_cost = '{:.2f}'.format(item_cost)	#This will format the cost to X.YY with ceiling/flooring.
+			item_row.itemCost = format_cost				#Assign value to item cost.
 
 			#Push all changes
 			item_row.save()
@@ -539,7 +542,7 @@ def approveSalesAdv(request, invoiceNumber):
 @login_required(login_url='/accounts/login/')
 def rcvAdvAll(request):
 	section_header = 'Receiving Advices'
-	all_advices = ReceivingAdvice.objects.filter().order_by('-receiptDate', '-adviceEditDate','-adviceCreateDate')
+	all_advices = ReceivingAdvice.objects.filter().order_by('-receiptDate')
 	try:
 		success = request.session.get('advice_success_message')
 	except KeyError:
@@ -603,7 +606,7 @@ def rcvAdv(request, receiptNumber):
 	#Count items
 	for n in SalesAdvice.objects.raw('SELECT *, SUM(itemQty) AS itemCount, SUM(itemCost) AS itemCost FROM mainboard_receivingadvice LEFT JOIN mainboard_receivingadviceitems ON mainboard_receivingadvice.id = mainboard_receivingadviceitems.receiptNumber_id LEFT JOIN mainboard_product ON mainboard_receivingadviceitems.item_id = mainboard_product.id WHERE mainboard_receivingadvice.receiptNumber="'+receiptNumber+'"'):
 		item_count = n.itemCount
-		item_total = n.itemCost
+		item_total = '{:.2f}'.format(n.itemCost)
 
 	context = {
 		'rcvAdv': rcvAdv,
@@ -718,7 +721,8 @@ def editRcvAdv(request, receiptNumber):
 			#Calculate updated costs
 			unit_cost = thisRow.itemUnitCost
 			item_cost = unit_cost * float(item_qty)
-			thisRow.itemCost = item_cost	#Assign value to item cost
+			format_cost = '{:.2f}'.format(item_cost)	#Format cost to X.YY with ceiling/flooring
+			thisRow.itemCost = format_cost				#Assign value to item cost
 
 			#Push changes
 			thisRow.save()

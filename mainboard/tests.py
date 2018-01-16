@@ -137,6 +137,8 @@ for y in range(0, count):
     print('------------------------')
     print('')
 """
+
+"""
 invoiceNumber = 'CON00228346'
 
 #Determine which advice is to be approved.
@@ -147,3 +149,14 @@ print(thisAdviceId)
 thisAdvice.adviceStatus = "APPROVED"
 thisAdvice.save()
 thisItem = SalesAdviceItems.objects.filter(invoiceNumber_id=thisAdviceId, itemQty='0').delete()
+"""
+
+#FORMAT NUMBERS BEFORE SAVING INTO DATABASE
+unit_cost = 23.31
+item_qty = 3
+print("Item cost is: ", unit_cost)
+print("Item quantity is: ", item_qty)
+non_adjusted = unit_cost * float(item_qty)
+adjusted = '{:.2f}'.format(non_adjusted)
+print("Non-formatted total: ", non_adjusted)
+print("Formatted total: ", adjusted)

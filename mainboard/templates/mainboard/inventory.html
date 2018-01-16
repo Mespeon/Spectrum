@@ -53,8 +53,7 @@
 				<td class="td-header">Receipt Number</td>
 				<td class="td-header">Receipt Date</td>
 				<td class="td-header">Store Code</td>
-				<td class="td-header">Created</td>
-				<td class="td-header">Edited</td>
+				<td class="td-header">Last Accessed</td>
 				<td class="td-header">Status</td>
 			</tr>
 			{% for rcvcode in rcvAdv_view_all %}
@@ -62,7 +61,6 @@
 					<td class="data"><a href="receivingadvice/{{ rcvcode.receiptNumber }}">{{ rcvcode.receiptNumber }}</a></td>
 					<td class="data">{{ rcvcode.receiptDate }}</td>
 					<td class="data">{{ rcvcode.store }}</td>
-					<td class="data">{{ rcvcode.adviceCreator }}, {{ rcvcode.adviceCreateDate }}</td>
 					<td class="data">{{ rcvcode.adviceEditor }}, {{ rcvcode.adviceEditDate }}</td>
 					<td class="data status">{{ rcvcode.adviceStatus }}</td>
 				</tr>
@@ -71,7 +69,13 @@
 
   <!-- VIEW SPECIFIC ADVICE -->
   {% elif rcvAdv %}
-    <h5><a href="{% url 'rcvAdvAll' %}" class="back-link">Back to Receiving Advice List</a></h5>
+    <!-- ADVICE BACK BUTTON -->
+    <div id="glance-shortcuts-mini">
+      <ul id="shortcuts">
+        <a href="{% url 'rcvAdvAll' %}"><li class="shortcut-link">Back to Receiving Advice List</li></a>
+      </ul>
+    </div>
+
     <h5>Viewing details for Receving Advice {{ receiptNumber }}</h5>
     {% if success %}
 			<h5>{{ success }}</h5>

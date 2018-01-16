@@ -131,7 +131,13 @@
 
 	<!-- VIEW STORE -->
 	{% elif store %}
-		<h5><a href="{% url 'storeAll' %}">Back to Stores List</a></h5>
+		<!-- ADVICE BACK BUTTON -->
+    <div id="glance-shortcuts-mini">
+      <ul id="shortcuts">
+        <a href="{% url 'storeAll' %}"><li class="shortcut-link">Back to Stores List</li></a>
+      </ul>
+    </div>
+
 		<h5>Viewing Details for Store {{ store }}</h5>
 		<div id="header-table-container">
 			<table id="header-table">
@@ -334,8 +340,14 @@
 
 	<!-- VIEW ITEM DETAILS -->
 	{% elif viewItem %}
-		<h5>Viewing Item</h5>
-		<h5><a href="{% url 'itemAll' %}" class="back-link">Back to Items List</a></h5>
+		<!-- ADVICE BACK BUTTON -->
+    <div id="glance-shortcuts-mini">
+      <ul id="shortcuts">
+        <a href="{% url 'itemAll' %}"><li class="shortcut-link">Back to Items List</li></a>
+      </ul>
+    </div>
+
+		<h5>Viewing Item Details</h5>
 		{% if success %}
 			<h5>{{ success }}</h5>
 		{% endif %}
@@ -449,17 +461,15 @@
 				<td class="td-header">Invoice Date</td>
 				<td class="td-header">AP Batch Number</td>
 				<td class="td-header">Store Code</td>
-				<td class="td-header">Created</td>
-				<td class="td-header">Edited</td>
+				<td class="td-header">Last Accessed</td>
 				<td class="td-header">Status</td>
 			</tr>
 			{% for sacode in salesadv_view_all %}
 				<tr>
 					<td class="data"><a href="salesadvice/{{ sacode.invoiceNumber }}">{{ sacode.invoiceNumber }}</a></td>
 					<td class="data">{{ sacode.invoiceDate }}</td>
-					<td class="data">&nbsp;</td>
+					<td class="data">{{ sacode.apBatchNumber }}</td>
 					<td class="data">{{ sacode.store }}</td>
-					<td class="data">{{ sacode.adviceCreator }}, {{ sacode.adviceCreateDate }}</td>
 					<td class="data">{{ sacode.adviceEditor }}, {{ sacode.adviceEditDate }}</td>
 					<td class="data status">{{ sacode.adviceStatus }}</td>
 				</tr>
@@ -480,6 +490,11 @@
 					<tr>
 						<td class="form-field"><label for="store_code">Store Code</label></td>
 						<td class="form-field">{{ form.store }}</td>
+					</tr>
+
+					<tr>
+						<td class="form-field"><label for="apBatchNumber">AP Batch Number</label></td>
+						<td class="form-field">{{ form.apBatchNumber }}</td>
 					</tr>
 
 					<tr>
@@ -534,7 +549,13 @@
 
 		<!-- SALES ADVICE DETAILS -->
 		{% elif salesAdv_detail %}
-		<h5><a href="{% url 'salesAdvAll' %}" class="back-link">Back to Sales Advice List</a></h5>
+		<!-- ADVICE BACK BUTTON -->
+    <div id="glance-shortcuts-mini">
+      <ul id="shortcuts">
+        <a href="{% url 'salesAdvAll' %}"><li class="shortcut-link">Back to Sales Advice List</li></a>
+      </ul>
+    </div>
+
 		<h5>Viewing details for Sales Advice {{ salesAdv_detail }}</h5>
 		{% if success %}
 			<h5>{{ success }}</h5>
@@ -579,7 +600,7 @@
 					<td class="data">Total Commission:</td>
 					<td class="data detail">{{ amtCommission }}</td>
 					<td class="data">A/P Batch Number:</td>
-					<td class="data detail">AP BATCH NUM</td>
+					<td class="data detail">{{ apBatchNumber }}</td>
 				</tr>
     	</table>
 			<!-- ADVICE CONTROLS -->
