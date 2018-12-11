@@ -9,7 +9,7 @@ from django.contrib.auth.models import *
 from django.contrib.auth.decorators import login_required
 from django.forms import ModelForm
 from django.contrib import messages
-from django.views.generic import CreateView, UpdateView, DeleteView, ListView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView, View
 from decimal import *
 from math import *
 
@@ -18,6 +18,9 @@ import pytz
 
 from .models import *
 from .forms import *
+
+from django.template.loader import get_template
+from .utils import render_to_pdf
 
 def index(request):
 	if request.user.is_authenticated:
@@ -806,3 +809,111 @@ def store(request):
 	}
 	return render(request, 'mainboard/stores.html', context)
 """
+@login_required(login_url='/accounts/login/')
+def salesadvicePDF(request, *args, **kwargs):
+	template = get_template('pdf/salesAdvice.html')
+	section_header = 'Sales Advices'
+	try:
+		success = request.session.get('advice_success_message')
+	except KeyError:
+		success = 'No new advices added'
+
+	all_advices = SalesAdvice.objects.filter().order_by('-invoiceDate')
+
+	context = {
+		'section_header': section_header,
+		'salesadv_view_all': all_advices,
+		'success': success
+	}
+
+	try:
+		del request.session['advice_success_message']
+	except KeyError:
+		pass
+
+	pdf = render_to_pdf('pdf/salesAdvice.html', context)
+	if pdf:
+		response = HttpResponse(pdf, content_type='application/pdf')
+		filename = 'Spectrum - Sales Advice List.pdf'
+		content = "attachment; filename='%s'" %(filename)
+		response['Content-Disposition'] = content
+		return response
+	return HttpResponse('An error occured')
+	
+
+@login_required(login_url='/accounts/login/')
+def receivingadvicePDF(request, *args, **kwargs):
+	template = get_template('pdf/receivingAdvice.html')
+	section_header = 'Receiving Advices'
+	all_advices = ReceivingAdvice.objects.filter().order_by('-receiptDate')
+	try:
+		success = request.session.get('advice_success_message')
+	except KeyError:
+		pass
+
+	context = {
+		'rcvAdv_view_all': all_advices,
+		'section_header': section_header,
+		'success': success,
+	}
+
+	try:
+		del request.session['advice_success_message']
+	except KeyError:
+		pass
+	
+	pdf = render_to_pdf('pdf/receivingAdvice.html', context)
+	if pdf:
+		response = HttpResponse(pdf, content_type='application/pdf')
+		filename = 'Spectrum - Receiving Advice List.pdf'
+		content = "attachment; filename='%s'" %(filename)
+		response['Content-Disposition'] = content
+		return response
+	return HttpResponse('An error occured')
+
+@login_required(login_url='/accounts/login/')
+def storesPDF(request, *args, **kwargs):
+	template = get_template('pdf/storeList.html')
+	section_header = 'Stores'
+	try:
+		success = request.session.get('store_success_message')
+	except KeyError:
+		success = 'No new stores added'
+
+	all_stores = Store.objects.filter().order_by('-id')
+	context = {
+		'section_header': section_header,
+		'store_view_all': all_stores,
+		'success': success
+	}
+
+	try:
+		del request.session['store_success_message']
+	except KeyError:
+		pass
+
+	pdf = render_to_pdf('pdf/storeList.html', context)
+	if pdf:
+		response = HttpResponse(pdf, content_type='application/pdf')
+		filename = 'Spectrum - Store List.pdf'
+		content = "attachment; filename='%s'" %(filename)
+		response['Content-Disposition'] = content
+		return response
+	return HttpResponse('An error occured')
+
+@login_required(login_url='/accounts/login/')
+def itemsPDF(request, *args, **kwargs):
+	section_header = 'Items'
+	all_items = Product.objects.all()
+	context = {
+		'section_header': section_header,
+		'item_view_all': all_items
+	}
+	pdf = render_to_pdf('pdf/itemList.html', context)
+	if pdf:
+		response = HttpResponse(pdf, content_type='application/pdf')
+		filename = 'Spectrum - Item List.pdf'
+		content = "attachment; filename='%s'" %(filename)
+		response['Content-Disposition'] = content
+		return response
+	return HttpResponse('An error occured')

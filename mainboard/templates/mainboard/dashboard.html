@@ -26,6 +26,7 @@
 				<ul id="shortcuts">
 					<a href="{% url 'addAdvice' %}"><li class="shortcut-link add">Create New Sales Advice</li></a>
 					<a href="{% url 'salesAdvAll' %}"><li class="shortcut-link">View All Sales Advices</li></a>
+					<a href="{% url 'salesAdvPDF' %}"><li class="shortcut-link">Download Sales Advices List</li></a>
 				</ul>
 			</div>
     </div>
@@ -40,6 +41,8 @@
 				<ul id="shortcuts">
 					<a href="{% url 'addRcvAdvice' %}"><li class="shortcut-link add">Create New Receiving Advice</li></a>
 					<a href="{% url 'rcvAdvAll' %}"><li class="shortcut-link">View All Receiving Advices</li></a>
+					<a href="{% url 'receivingAdvPDF' %}"><li class="shortcut-link">Download Receiving Advices List</li></a>
+
 				</ul>
 			</div>
 		</div>
@@ -54,6 +57,8 @@
 				<ul id="shortcuts">
 					{% if user.is_superuser or user.is_staff %}<a href="{% url 'addStore' %}"><li class="shortcut-link add">Add New Store</li></a>{% endif %}
 					<a href="{% url 'storeAll' %}"><li class="shortcut-link">View All Stores</li></a>
+					<a href="{% url 'storeListPDF' %}"><li class="shortcut-link">Download Store List</li></a>
+
 				</ul>
 			</div>
     </div>
@@ -68,6 +73,8 @@
 				<ul id="shortcuts">
 					{% if user.is_superuser or user.is_staff %}<a href="{% url 'addItem' %}"><li class="shortcut-link add">Add New Item</li></a>{% endif %}
 					<a href="{% url 'itemAll' %}"><li class="shortcut-link">View All Items</li></a>
+					<a href="{% url 'itemListPDF' %}"><li class="shortcut-link">Download Item List</li></a>
+
 				</ul>
 			</div>
     </div>

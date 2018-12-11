@@ -1,6 +1,10 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
+from .views import salesadvicePDF
+from .views import receivingadvicePDF
+from .views import storesPDF
+from .views import itemsPDF
 
 urlpatterns = [
 	#GENERAL URLS
@@ -37,4 +41,9 @@ urlpatterns = [
 	path(r'inventory/receivingadvice/<receiptNumber>/edit', views.editRcvAdv, name='editRcvAdvice'),
 	path(r'inventory/receivingadvice/<receiptNumber>/approve', views.approveRcvAdv, name='approveAdvice'),
 	path(r'inventory/receivingadvice/<receiptNumber>/cancel', views.cancelRcvAdv, name='cancelAdvice'),
+	#PDF GENERATOR
+	path(r'salesadvice/pdf/', views.salesadvicePDF, name='salesAdvPDF'),
+	path(r'receivingadvice/pdf/', views.receivingadvicePDF, name='receivingAdvPDF'),
+	path(r'stores/pdf/', views.storesPDF, name='storeListPDF'),
+	path(r'items/pdf/', views.itemsPDF, name='itemListPDF'),
 ]
